@@ -56,8 +56,9 @@ For example, you may want to evaluate differently based on whether a number is e
   ; do even things
 )
 ```
-*Note that the if takes advantage of the fact that 0 == (). This technique is handy when recursing through lists too.
-The last item in a list is always () which evaluates to false, so in that case you can break the recursion.*
+
+_Note that the if takes advantage of the fact that 0 == (). This technique is handy when recursing through lists too.
+The last item in a list is always () which evaluates to false, so in that case you can break the recursion._
 
 However, `divmod` is a pretty expensive operation, and we have to add an `r` to access the remainder once the operation has completed.
 Instead, we can just use `logand` to evaluate just the last bit:
@@ -155,7 +156,7 @@ A good example is [sha256tree](/docs/common_functions#sha256tree1).
 Since the function works on either cons boxes or atoms, you may be tempted to use it on a single atom (maybe you're currying it into a function).
 The function needs to work this way because it recurses and will always run into atoms as it does so.
 However, using it to hash only an atom actually adds unnecessary cost to the program.
-Not only do you add the function call overhead, but you also add the check to see if it's an atom or a list, even though you know its an atom!  A more cost effective method is to manually hash it like it would be hashed in a tree: `(sha256 1 some_atom)`.
+Not only do you add the function call overhead, but you also add the check to see if it's an atom or a list, even though you know its an atom! A more cost effective method is to manually hash it like it would be hashed in a tree: `(sha256 1 some_atom)`.
 
 ## Conclusion
 

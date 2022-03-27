@@ -1,19 +1,19 @@
 # CAT creation tutorial (Windows)
 
-This tutorial is for creating Chia Asset Tokens (CATS) on Windows. We also have made available a version of [this tutorial for Linux and MacOS users](https://www.chialisp.com/docs/tutorials/CAT_Launch_Process_Linux_MacOS "Chia Asset Token tutorial for Linux and MacOS users").
+This tutorial is for creating Chia Asset Tokens (CATS) on Windows. We also have made available a version of [this tutorial for Linux and MacOS users](https://www.chialisp.com/docs/tutorials/CAT_Launch_Process_Linux_MacOS 'Chia Asset Token tutorial for Linux and MacOS users').
 
 Contents:
 
-* [Introduction](#introduction)
-* [CAT issuance granularity](#cat-issuance-granularity)
-* [Setting up your Chia environment](#setting-up-your-chia-environment)
-* [Creating a single-mint CAT](#creating-a-single-mint-cat)
-* [Creating a multiple mint CAT](#creating-a-multiple-mint-cat)
-* [Preparing for mainnet](#preparing-for-mainnet)
-* [Generating a secure key pair](#generating-a-secure-key-pair)
-* [Potential future additions](#potential-future-additions)
+- [Introduction](#introduction)
+- [CAT issuance granularity](#cat-issuance-granularity)
+- [Setting up your Chia environment](#setting-up-your-chia-environment)
+- [Creating a single-mint CAT](#creating-a-single-mint-cat)
+- [Creating a multiple mint CAT](#creating-a-multiple-mint-cat)
+- [Preparing for mainnet](#preparing-for-mainnet)
+- [Generating a secure key pair](#generating-a-secure-key-pair)
+- [Potential future additions](#potential-future-additions)
 
------
+---
 
 ## Introduction
 
@@ -21,30 +21,30 @@ Welcome to the world of CATs! We're excited to have you here, and we can't wait 
 
 This tutorial will help you jump right in and get started with issuing your own CATs. There are a few things you should know before we begin.
 
-The [CAT1 standard](https://chialisp.com/docs/puzzles/cats "CAT1 standard documentation") is finalized as of January 2022. However, to minimize your risk of running into unexpected results, we recommend that you do following:
+The [CAT1 standard](https://chialisp.com/docs/puzzles/cats 'CAT1 standard documentation') is finalized as of January 2022. However, to minimize your risk of running into unexpected results, we recommend that you do following:
 
-* Generate a new public/private key pair for each CAT you issue. This key pair should be used for issuing one specific CAT **and nothing else**. It should also be the only key pair on your computer while issuing the CAT.
-* Test thoroughly on testnet before issuing your CAT to mainnet.
+- Generate a new public/private key pair for each CAT you issue. This key pair should be used for issuing one specific CAT **and nothing else**. It should also be the only key pair on your computer while issuing the CAT.
+- Test thoroughly on testnet before issuing your CAT to mainnet.
 
 For any questions regarding this tutorial, head over to the #chialisp channel on our [Keybase](https://keybase.io/team/chia_network.public "Chia's Keybase forum") forum, where there are lots of friendly folks who can help you.
 
------
+---
 
 ## CAT issuance granularity
 
 CAT denominations, as well as the rules behind minting and melting, can take some getting used to. Here are a few things to keep in mind before you issue your CATs:
 
-* Most Chia wallets choose to display their value in XCH. However, this is a purely cosmetic choice because Chia's blockchain only knows about mojos. One XCH is equal to one trillion (1,000,000,000,000) mojos.
-* In a similar vein, Chia Network has made the design decision to map 1 CAT to 1000 XCH mojos. This ratio will be the same for all CATs.
-* Theoretically, it would be possible to set the CAT:mojo ratio to something other than 1:1000 for a specific CAT, but we strongly recommend against doing this. The official Chia wallet will not support CATs with a ratio other than 1:1000. Additionally, if you created your own wallet with support for different ratios, users of this wallet would almost certainly be confused and accidentally spend too much or too little money, by multiple orders of magnitude. Please don't attempt this.
-* The melt value of a single token is 1000 mojos. This remains true regardless of the token's face value or its circulating supply.
-* A token's face value and its melt value are not necessarily correlated, let alone matched.
+- Most Chia wallets choose to display their value in XCH. However, this is a purely cosmetic choice because Chia's blockchain only knows about mojos. One XCH is equal to one trillion (1,000,000,000,000) mojos.
+- In a similar vein, Chia Network has made the design decision to map 1 CAT to 1000 XCH mojos. This ratio will be the same for all CATs.
+- Theoretically, it would be possible to set the CAT:mojo ratio to something other than 1:1000 for a specific CAT, but we strongly recommend against doing this. The official Chia wallet will not support CATs with a ratio other than 1:1000. Additionally, if you created your own wallet with support for different ratios, users of this wallet would almost certainly be confused and accidentally spend too much or too little money, by multiple orders of magnitude. Please don't attempt this.
+- The melt value of a single token is 1000 mojos. This remains true regardless of the token's face value or its circulating supply.
+- A token's face value and its melt value are not necessarily correlated, let alone matched.
 
 With one XCH, you can mint 1 billion CATs. The face value of these tokens could be zero, or multiple XCH, or anywhere in between. This value is decided by the market -- it's worth whatever someone is willing to pay for it. The value of the tokens has nothing to do with the underlying XCH, other than their 1000-mojo melt value.
 
-These concepts are discussed in greater detail in our [CAT1 standard](https://chialisp.com/docs/puzzles/cats#cat-denominations-value-and-retirement-rules "CAT1 standard documentation").
+These concepts are discussed in greater detail in our [CAT1 standard](https://chialisp.com/docs/puzzles/cats#cat-denominations-value-and-retirement-rules 'CAT1 standard documentation').
 
------
+---
 
 ## Setting up your Chia environment
 
@@ -54,197 +54,197 @@ We'll start with installing Chia's testnet.
 
 0. Install the necessary prerequisites to run a normal Chia build, such as Git, Python, and Rust. Note that your Python version must be between 3.7 and 3.9. You can obtain the version by running `python version`.
 
->NOTE: If you already have Chia version 1.3 or later installed, you can skip step 1. If you are running on the mainnet, be sure to run `chia configure -t true` to switch to testnet10.
+> NOTE: If you already have Chia version 1.3 or later installed, you can skip step 1. If you are running on the mainnet, be sure to run `chia configure -t true` to switch to testnet10.
 
 1. Clone the `main` branch from GitHub and install Chia:
 
-    a. Open a new PowerShell window as Administrator, create a new folder called `chia_main` (or something similar) and cd to it.
- 
-    b. Run `git clone https://github.com/Chia-Network/chia-blockchain.git -b main --recurse-submodules` to clone Chia's main branch.
- 
-    c. Run `cd chia-blockchain`.
-    
-    d. Run `.\Install.ps1` to install Chia.
-    
-    e. Run `.\venv\Scripts\Activate.ps1` to activate a virtual environment.
-    
-    f. Run `chia init` to initialize your environment.
+   a. Open a new PowerShell window as Administrator, create a new folder called `chia_main` (or something similar) and cd to it.
 
-    g. If you receive this message: "WARNING: UNPROTECTED SSL FILE!" then run `chia init --fix-ssl-permissions`.
-    
-    h. Run `.\Install-gui.ps1` to install the Chia GUI.
+   b. Run `git clone https://github.com/Chia-Network/chia-blockchain.git -b main --recurse-submodules` to clone Chia's main branch.
 
-    >If this command fails, you may have better luck running `.\install-gui.sh`.
+   c. Run `cd chia-blockchain`.
 
-    i. Run `chia configure -t true` to switch to testnet10.
+   d. Run `.\Install.ps1` to install Chia.
+
+   e. Run `.\venv\Scripts\Activate.ps1` to activate a virtual environment.
+
+   f. Run `chia init` to initialize your environment.
+
+   g. If you receive this message: "WARNING: UNPROTECTED SSL FILE!" then run `chia init --fix-ssl-permissions`.
+
+   h. Run `.\Install-gui.ps1` to install the Chia GUI.
+
+   > If this command fails, you may have better luck running `.\install-gui.sh`.
+
+   i. Run `chia configure -t true` to switch to testnet10.
 
 2. Run and sync the Chia GUI:
 
-    a. Before doing anything else, it’s a good idea to set your log_level to INFO. To do this, run `chia configure -log-level INFO`.
-    
-    b. Run `cd chia_main/chia-blockchain/chia-blockchain-gui`.
+   a. Before doing anything else, it’s a good idea to set your log_level to INFO. To do this, run `chia configure -log-level INFO`.
 
-    c. If "(venv)" doesn’t appear on the left side of your command line, run `..\venv\Scripts\Activate.ps1` to activate your virtual environment.
-    
-    d. Run `npm run electron` to run the Chia GUI as a daemon.
+   b. Run `cd chia_main/chia-blockchain/chia-blockchain-gui`.
 
-    e. You will be given the option to run in "Farming Mode" or "Wallet Mode". Choose "Wallet Mode", which will only run the light wallet. Note that you do not need to run a full node in order to issue a CAT.
+   c. If "(venv)" doesn’t appear on the left side of your command line, run `..\venv\Scripts\Activate.ps1` to activate your virtual environment.
 
-    f. If you already have a "Private key with public fingerprint", select it when the GUI loads. Otherwise, select "CREATE A NEW PRIVATE KEY".
+   d. Run `npm run electron` to run the Chia GUI as a daemon.
 
-    g. "Status: Syncing" should appear in the upper right corner of the GUI. Within a few minutes, this should change to "Status: Synced".
+   e. You will be given the option to run in "Farming Mode" or "Wallet Mode". Choose "Wallet Mode", which will only run the light wallet. Note that you do not need to run a full node in order to issue a CAT.
 
-    h. If your Total Balance is 0, you can get some testnet10 TXCH from [our faucet](https://testnet10-faucet.chia.net "testnet10 TXCH faucet").
+   f. If you already have a "Private key with public fingerprint", select it when the GUI loads. Otherwise, select "CREATE A NEW PRIVATE KEY".
 
-4. Set up the CAT admin tool, which will help you to issue your CATs:
+   g. "Status: Syncing" should appear in the upper right corner of the GUI. Within a few minutes, this should change to "Status: Synced".
 
-    a. Run `git clone https://github.com/Chia-Network/CAT-admin-tool.git -b main --recurse-submodules` to clone the CAT admin tool.
+   h. If your Total Balance is 0, you can get some testnet10 TXCH from [our faucet](https://testnet10-faucet.chia.net 'testnet10 TXCH faucet').
 
-    b. Run `cd CAT-admin-tool`.
-    
-    c. Run `python -m venv venv` to create a virtual environment.
+3. Set up the CAT admin tool, which will help you to issue your CATs:
 
-    d. Run `.\venv\Scripts\Activate.ps1` to activate the virtual environment.
+   a. Run `git clone https://github.com/Chia-Network/CAT-admin-tool.git -b main --recurse-submodules` to clone the CAT admin tool.
 
-    e. Run `pip install .`. This will take a few minutes.
-    >NOTE: You might receive an error such as `ERROR: Failed building wheel for CAT-admin-tool`. This is likely safe to ignore. As long as you can run `cats --help` without errors, the tool has been installed properly.
+   b. Run `cd CAT-admin-tool`.
 
-    f. Run `pip install chia-dev-tools --no-deps`.
+   c. Run `python -m venv venv` to create a virtual environment.
 
-    g. Run `pip install pytest`. You can safely ignore the errors about missing requirements.
+   d. Run `.\venv\Scripts\Activate.ps1` to activate the virtual environment.
 
-5. Your environment should be all set, but let's make sure:
+   e. Run `pip install .`. This will take a few minutes.
 
-    a. Run `cats --help`. You should get a usage statement.
-    
-    b. Run `cdv --help`. You should get another usage statement.
+   > NOTE: You might receive an error such as `ERROR: Failed building wheel for CAT-admin-tool`. This is likely safe to ignore. As long as you can run `cats --help` without errors, the tool has been installed properly.
 
-    c. Verify that "Status: Synced" is showing in the upper right side of the Chia GUI.
+   f. Run `pip install chia-dev-tools --no-deps`.
 
-    d. Make sure you have some TXCH in your wallet.
+   g. Run `pip install pytest`. You can safely ignore the errors about missing requirements.
+
+4. Your environment should be all set, but let's make sure:
+
+   a. Run `cats --help`. You should get a usage statement.
+
+   b. Run `cdv --help`. You should get another usage statement.
+
+   c. Verify that "Status: Synced" is showing in the upper right side of the Chia GUI.
+
+   d. Make sure you have some TXCH in your wallet.
 
 Your environment is now set up and you are ready to start issuing CATs.
 
------
+---
 
 ## Creating a single-mint CAT
 
-If you're a visual learner, please see our [video tutorial for creating a single-mint CAT](https://chialisp.com/docs/tutorials/single_issuance_CAT "Single-mint CAT video tutorial").
+If you're a visual learner, please see our [video tutorial for creating a single-mint CAT](https://chialisp.com/docs/tutorials/single_issuance_CAT 'Single-mint CAT video tutorial').
 
-> NOTE: This section will discuss Token Asset Issuance Limiters (TAILs), as well some technical details of CATs. For a refresher on CATs and TAILs, check out our [CAT1 standard](https://chialisp.com/docs/puzzles/cats "CAT1 standard documentation").
+> NOTE: This section will discuss Token Asset Issuance Limiters (TAILs), as well some technical details of CATs. For a refresher on CATs and TAILs, check out our [CAT1 standard](https://chialisp.com/docs/puzzles/cats 'CAT1 standard documentation').
 
 To get started, you will create a single-mint CAT. This is the default way to issue a CAT. It's also the simplest. It contains a TAIL that only can be used on a specific XCH coin. In Chia the coins can only be spent once, so in this case, the CAT can only mint tokens once.
 
 A CAT with a single-mint TAIL will be useful for anyone who wants to create a token with a guaranteed fixed supply.
 
-You can find the TAIL we'll use for this example [here](https://github.com/Chia-Network/chia-blockchain/blob/main/chia/wallet/puzzles/genesis-by-coin-id-with-0.clvm "Single-mint TAIL").
+You can find the TAIL we'll use for this example [here](https://github.com/Chia-Network/chia-blockchain/blob/main/chia/wallet/puzzles/genesis-by-coin-id-with-0.clvm 'Single-mint TAIL').
 
 1. Find a coin to mint, and create and push a new spendbundle:
 
-    a. Change to the "CAT-admin-tool" folder if you're not already there.
+   a. Change to the "CAT-admin-tool" folder if you're not already there.
 
-    b. Figure out how many XCH mojos you want to use to issue your CAT. Each CAT token will contain 1000 mojos, so you should multiply the number of tokens you want to mint by 1000. For example, if you want to mint 1 million tokens, you'll need 1 billion XCH mojos (1/1000 of an XCH).
+   b. Figure out how many XCH mojos you want to use to issue your CAT. Each CAT token will contain 1000 mojos, so you should multiply the number of tokens you want to mint by 1000. For example, if you want to mint 1 million tokens, you'll need 1 billion XCH mojos (1/1000 of an XCH).
 
-    c. Take note of your Receive Address in the Chia GUI. You'll need it for the next step.
+   c. Take note of your Receive Address in the Chia GUI. You'll need it for the next step.
 
-    d. Run `cats --tail .\reference_tails\genesis_by_coin_id.clsp.hex --send-to <your receive address> --amount <XCH mojos> --as-bytes --select-coin`
+   d. Run `cats --tail .\reference_tails\genesis_by_coin_id.clsp.hex --send-to <your receive address> --amount <XCH mojos> --as-bytes --select-coin`
 
-    The --select-coin flag will choose a coin from your wallet for minting your tokens. The final line of the output will be "Name: &lt;Coin ID&gt;". You’ll use "&lt;Coin ID&gt;" in the next step.
+   The --select-coin flag will choose a coin from your wallet for minting your tokens. The final line of the output will be "Name: &lt;Coin ID&gt;". You’ll use "&lt;Coin ID&gt;" in the next step.
 
-    e. Run the same command again, this time removing the --select-coin flag and adding a new flag, "--curry 0x&lt;Coin ID&gt;". It’s very important to preface the &lt;Coin ID&gt; with 0x here, to make CLVM interpret the value as bytes and not a string. Here’s the full command to run:
+   e. Run the same command again, this time removing the --select-coin flag and adding a new flag, "--curry 0x&lt;Coin ID&gt;". It’s very important to preface the &lt;Coin ID&gt; with 0x here, to make CLVM interpret the value as bytes and not a string. Here’s the full command to run:
 
-    `cats --tail .\reference_tails\genesis_by_coin_id.clsp.hex --send-to <your receive address> --amount <XCH mojos> --as-bytes --curry 0x<Coin ID>`
+   `cats --tail .\reference_tails\genesis_by_coin_id.clsp.hex --send-to <your receive address> --amount <XCH mojos> --as-bytes --curry 0x<Coin ID>`
 
-    This command will give the following output:
+   This command will give the following output:
 
-    `The transaction has been created, would you like to push it to the network? (Y/N)`
+   `The transaction has been created, would you like to push it to the network? (Y/N)`
 
-    f. Enter `Y`.
+   f. Enter `Y`.
 
-    g. The output will be `Asset ID: <Asset ID>`. Copy the &lt;Asset ID&gt;, which you'll need in the next step. Meanwhile, the transaction to create your CAT is being pushed to the blockchain.
+   g. The output will be `Asset ID: <Asset ID>`. Copy the &lt;Asset ID&gt;, which you'll need in the next step. Meanwhile, the transaction to create your CAT is being pushed to the blockchain.
 
-    Congratulations! You have issued your first CAT. You still need to tell your wallet about it, though.
+   Congratulations! You have issued your first CAT. You still need to tell your wallet about it, though.
 
 2. Add a wallet ID for your new CAT:
 
-    a. Switch to the Chia GUI. Within a few minutes, your balance should decrease by the number of mojos you just minted. It will not show up in your transactions.
+   a. Switch to the Chia GUI. Within a few minutes, your balance should decrease by the number of mojos you just minted. It will not show up in your transactions.
 
-    b. Now you can add a wallet ID for your new CAT. In the upper left corner, click "+ ADD TOKEN", then click "+ Custom". Enter the name of your CAT (it can be anything) in the first text field. For the second field, paste the &lt;Asset ID&gt; you saved from a few steps ago. Click ADD.
+   b. Now you can add a wallet ID for your new CAT. In the upper left corner, click "+ ADD TOKEN", then click "+ Custom". Enter the name of your CAT (it can be anything) in the first text field. For the second field, paste the &lt;Asset ID&gt; you saved from a few steps ago. Click ADD.
 
-    c. You will now be taken to your new CAT wallet. The balance should show the number of XCH mojos you chose to use, divided by 1000. This is because CAT mojos are one-thousandth of a CAT.
+   c. You will now be taken to your new CAT wallet. The balance should show the number of XCH mojos you chose to use, divided by 1000. This is because CAT mojos are one-thousandth of a CAT.
 
-    d. If you see a Total Balance of 0, you need to refresh your wallet. Run `chia start wallet-only -r`. You should now see the correct balance.
+   d. If you see a Total Balance of 0, you need to refresh your wallet. Run `chia start wallet-only -r`. You should now see the correct balance.
 
 You now have access to your CAT in the GUI. You can send and receive your new tokens just like you would with regular XCH.
 
------
+---
 
 ## Creating a multiple mint CAT
 
-If you're a visual learner, please see our [video tutorial for creating a multiple mint CAT](https://chialisp.com/docs/tutorials/multiple_issuance_CAT "Multiple mint CAT video tutorial").
+If you're a visual learner, please see our [video tutorial for creating a multiple mint CAT](https://chialisp.com/docs/tutorials/multiple_issuance_CAT 'Multiple mint CAT video tutorial').
 
 Next we’ll create a CAT capable of minting tokens multiple times. This CAT uses a delegated TAIL, which is much more flexible than the previous one. As long as you sign a puzzlehash that you specify, you can mint new tokens using whatever TAIL you want. This allows for features such as rebate offers and distributed minting and retiring of tokens.
 
-You can find the TAIL we'll use for this example [here](https://github.com/Chia-Network/chia-blockchain/blob/main/chia/wallet/puzzles/delegated_genesis_checker.clvm "Delegated TAIL").
+You can find the TAIL we'll use for this example [here](https://github.com/Chia-Network/chia-blockchain/blob/main/chia/wallet/puzzles/delegated_genesis_checker.clvm 'Delegated TAIL').
 
 We’ll set up this CAT to delegate the same TAIL we set up previously. What this means is that nobody else can mint new tokens until you allow it. Keep in mind that this is only one of many possible implementations of a delegated TAIL.
 
 1. Find a coin to mint, and create and push a new spendbundle:
 
-    a. Change to the "CAT-admin-tool" folder if you're not already there.
+   a. Change to the "CAT-admin-tool" folder if you're not already there.
 
-    b. Figure out how many XCH mojos you want to use to issue your CAT. Each CAT token will contain 1000 mojos, so you should multiply the number of tokens you want to mint by 1000. For example, if you want to mint 1 million tokens, you'll need 1 billion XCH mojos (1/1000 of an XCH).
+   b. Figure out how many XCH mojos you want to use to issue your CAT. Each CAT token will contain 1000 mojos, so you should multiply the number of tokens you want to mint by 1000. For example, if you want to mint 1 million tokens, you'll need 1 billion XCH mojos (1/1000 of an XCH).
 
-    c. Take note of your Receive Address in the Chia GUI.
+   c. Take note of your Receive Address in the Chia GUI.
 
-    d. Run `chia keys show`. Take note of your &lt;Fingerprint&gt; and &lt;Master public key&gt;.
+   d. Run `chia keys show`. Take note of your &lt;Fingerprint&gt; and &lt;Master public key&gt;.
 
-    e. Run `cats --tail .\reference_tails\delegated_tail.clsp.hex --curry 0x<Master public key> --send-to <wallet address> -a <XCH mojos> --as-bytes --select-coin`
+   e. Run `cats --tail .\reference_tails\delegated_tail.clsp.hex --curry 0x<Master public key> --send-to <wallet address> -a <XCH mojos> --as-bytes --select-coin`
 
-    The --select-coin flag will choose a coin from your wallet to issue the CAT from. The final line of the output will be "Name: &lt;Coin ID&gt;". You’ll use "&lt;Coin ID&gt;" in the next step.
+   The --select-coin flag will choose a coin from your wallet to issue the CAT from. The final line of the output will be "Name: &lt;Coin ID&gt;". You’ll use "&lt;Coin ID&gt;" in the next step.
 
-    Now that you have a coin, you can create a full delegated TAIL. In our case, the TAIL it delegates will be of the single-mint variety.
-    
-    f. Run `cdv clsp curry .\reference_tails\genesis_by_coin_id.clsp.hex -a 0x<Coin ID>`.
-    
-    (Keep in mind the 0x before &lt;Coin ID&gt; is necessary.) The result of this command will be a &lt;delegated puzzle&gt;, which you’ll pass in as part of the solution to your main TAIL.
+   Now that you have a coin, you can create a full delegated TAIL. In our case, the TAIL it delegates will be of the single-mint variety.
 
-    g. Run the same command again, with the additional --treehash flag. This will give you the &lt;treehash&gt; of the puzzle you just created:
-    
-    `cdv clsp curry .\reference_tails\genesis_by_coin_id.clsp.hex -a 0x<Coin ID> --treehash`
+   f. Run `cdv clsp curry .\reference_tails\genesis_by_coin_id.clsp.hex -a 0x<Coin ID>`.
 
-    h. Sign the treehash (you do not need 0x here) with the &lt;Fingerprint&gt; you noted above by running this command:
-    
-    `chia keys sign -d <treehash> -f <Fingerprint> -t m -b`
-    
-    The last two flags are for the path and bytes. Make sure the resulting Public Key corresponds to the &lt;Fingerprint&gt; you just used. Copy the &lt;Signature&gt; to use in the next step.
+   (Keep in mind the 0x before &lt;Coin ID&gt; is necessary.) The result of this command will be a &lt;delegated puzzle&gt;, which you’ll pass in as part of the solution to your main TAIL.
 
-    i. Run the same "cats" command as above, but remove the --select-coin flag and add the --solution flag, passing in the &lt;delegated puzzle&gt; you just calculated. This must be surrounded by quotes and parenthesis, and it must contain a solution, which we'll leave empty. Add the --signature flag as well, so the command looks like this:
+   g. Run the same command again, with the additional --treehash flag. This will give you the &lt;treehash&gt; of the puzzle you just created:
 
-    `cats --tail .\reference_tails\delegated_tail.clsp.hex --curry 0x<Master public key> --send-to <wallet address> -a <amount in mojos to issue> --as-bytes --solution "(<delegated puzzle> ())" --signature <Signature>`
+   `cdv clsp curry .\reference_tails\genesis_by_coin_id.clsp.hex -a 0x<Coin ID> --treehash`
 
-    This command will give the following output:
+   h. Sign the treehash (you do not need 0x here) with the &lt;Fingerprint&gt; you noted above by running this command:
 
-    `The transaction has been created, would you like to push it to the network? (Y/N)`
+   `chia keys sign -d <treehash> -f <Fingerprint> -t m -b`
 
-    j. Enter `Y`.
+   The last two flags are for the path and bytes. Make sure the resulting Public Key corresponds to the &lt;Fingerprint&gt; you just used. Copy the &lt;Signature&gt; to use in the next step.
 
-    k. The output will be `Asset ID: <Asset ID>`. Copy the &lt;Asset ID&gt;, which you'll need in the next step. Meanwhile, the transaction to create your CAT is being pushed to the blockchain.
+   i. Run the same "cats" command as above, but remove the --select-coin flag and add the --solution flag, passing in the &lt;delegated puzzle&gt; you just calculated. This must be surrounded by quotes and parenthesis, and it must contain a solution, which we'll leave empty. Add the --signature flag as well, so the command looks like this:
+
+   `cats --tail .\reference_tails\delegated_tail.clsp.hex --curry 0x<Master public key> --send-to <wallet address> -a <amount in mojos to issue> --as-bytes --solution "(<delegated puzzle> ())" --signature <Signature>`
+
+   This command will give the following output:
+
+   `The transaction has been created, would you like to push it to the network? (Y/N)`
+
+   j. Enter `Y`.
+
+   k. The output will be `Asset ID: <Asset ID>`. Copy the &lt;Asset ID&gt;, which you'll need in the next step. Meanwhile, the transaction to create your CAT is being pushed to the blockchain.
 
 2. Add a wallet ID for your new CAT:
 
-    a. Switch to the Chia GUI. Within a few minutes, your balance should decrease by the number of mojos you just minted. It might not show up in your transactions.
+   a. Switch to the Chia GUI. Within a few minutes, your balance should decrease by the number of mojos you just minted. It might not show up in your transactions.
 
-    b. Now you can add a wallet ID for your new CAT. In the upper left corner, click "+ ADD TOKEN", then click "+ Custom". Enter the name of your CAT (it can be anything) in the first text field. For the second text field, paste the &lt;Asset ID&gt; you saved from a few steps ago. Click ADD.
+   b. Now you can add a wallet ID for your new CAT. In the upper left corner, click "+ ADD TOKEN", then click "+ Custom". Enter the name of your CAT (it can be anything) in the first text field. For the second text field, paste the &lt;Asset ID&gt; you saved from a few steps ago. Click ADD.
 
-    c. You will now be taken to your new CAT wallet. The balance should show the number of XCH mojos you chose to use, divided by 1000. This is because CAT mojos are one-thousandth of a CAT.
-    
-    d. If you see a Total Balance of 0, you need to refresh your wallet. Run `chia start wallet-only -r`. You should now see the correct balance.
+   c. You will now be taken to your new CAT wallet. The balance should show the number of XCH mojos you chose to use, divided by 1000. This is because CAT mojos are one-thousandth of a CAT.
 
-    Just like the previous example, you now have access to your CAT in the GUI.
+   d. If you see a Total Balance of 0, you need to refresh your wallet. Run `chia start wallet-only -r`. You should now see the correct balance.
+
+   Just like the previous example, you now have access to your CAT in the GUI.
 
 3. Because this CAT uses a delegated TAIL, you can issue new mintings by re-doing step 1 from this section. After you run the “cdv rpc pushtx” command, the balance in your CAT wallet will increase according to the new minting.
-
 
 ## Preparing for mainnet
 
@@ -260,11 +260,11 @@ Next, you'll need to generate and protect your keys in a secure manner, which we
 
 Before we walk you through the process of securely generating and saving a new public/private key pair, please read this important message.
 
->**WARNING:** The key pair you are about to use will control the minting and retirement of these tokens **forever.** If the private key were ever compromised, an attacker could mint new tokens, as well as melt any that they owned into regular XCH.
+> **WARNING:** The key pair you are about to use will control the minting and retirement of these tokens **forever.** If the private key were ever compromised, an attacker could mint new tokens, as well as melt any that they owned into regular XCH.
 >
->The only way to nullify an attack would be to keep track of illegitimate mints (luckily all of this is fully visible on the public ledger), issue a new CAT, and then offer an exchange of legitimate old CATs for the new CAT type.
+> The only way to nullify an attack would be to keep track of illegitimate mints (luckily all of this is fully visible on the public ledger), issue a new CAT, and then offer an exchange of legitimate old CATs for the new CAT type.
 >
->This would be a complex and time-consuming process that would likely result in people being sold counterfeit CATs at some point. It’s very important to keep your private key secret.
+> This would be a complex and time-consuming process that would likely result in people being sold counterfeit CATs at some point. It’s very important to keep your private key secret.
 
 Here's how to generate a secure public/private key pair for issuing your new CAT:
 
@@ -274,12 +274,11 @@ Here's how to generate a secure public/private key pair for issuing your new CAT
 
 3. Run `chia keys show`.
 
-    a. If you receive this message: `There are no saved private keys`, then proceed to step 4.
+   a. If you receive this message: `There are no saved private keys`, then proceed to step 4.
 
-    b. If you have any keys stored on your machine, they'll be shown now. Note the Fingerprint for each key, as you will _not_ be using these keys to create your CAT and you don't want to confuse them for the key you are about to create. Even better, if this is an option for you, would be to delete your existing keys to avoid confusing them for the new ones. Just be sure to save your mnemonic seed somewhere secure before you delete your keys.
+   b. If you have any keys stored on your machine, they'll be shown now. Note the Fingerprint for each key, as you will _not_ be using these keys to create your CAT and you don't want to confuse them for the key you are about to create. Even better, if this is an option for you, would be to delete your existing keys to avoid confusing them for the new ones. Just be sure to save your mnemonic seed somewhere secure before you delete your keys.
 
 4. Run `chia init`. This will initialize your environment if it has not yet been set up.
-    
 5. Run `chia keys generate`. This will generate a new public/private key pair.
 
 6. Run `chia keys show --show-mnemonic-seed`. This will show your public and private keys, as well as your Mnemonic seed.

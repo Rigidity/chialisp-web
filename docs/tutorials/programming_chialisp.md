@@ -37,4 +37,4 @@ nodes on the net. Go out of town, your server goes down,
 
 ---
 
-If you have further questions, join [Chia Network's public Keybase team](https://keybase.io/team/chia_network.public) and ask in the *#chialisp* channel.
+If you have further questions, join [Chia Network's public Keybase team](https://keybase.io/team/chia_network.public) and ask in the _#chialisp_ channel.

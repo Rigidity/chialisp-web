@@ -14,24 +14,24 @@ Any inner puzzle can be wrapped with this puzzle if it has necessity for uniquen
 
 A few design choices were made in the creation of this puzzle so let's go over them now:
 
-* **Singletons are always odd.**  In order to assure that a singleton does not duplicate itself, it needs some way to verify that its children do not consist of more than one new singleton.
-It does this by verifying that only one of its children is odd.
-It is either a new singleton, or it is the **melt value** and will be ignored (more on that later).
-Odd was chosen over even because you may want to have singletons create other, non-singleton coins at times (like 0 amount messages for the DID) and having the singleton be odd just makes this easier.
-Coins can be multiples of 10 so you can send a full XCH rather than an XCH and a mojo.
-No matter how many even amounts you subtract from an odd amount, the end result will always be odd.
-* **Singletons always wrap their odd child.** This abstracts some of the singleton functionality away from the inner puzzles.
-If an inner puzzle creates an odd coin, it doesn't have to worry about making it a singleton, the [outer puzzle will take care of that](https://chialisp.com/docs/common_functions/#outer-and-inner-puzzles).
-It also prevents an inner puzzle from accidentally melting the singleton by forgetting to wrap its odd output.
-* **A specific magic melt value determines whether the singleton wraps its child.** If you would like to destroy a singleton and use its amount to create a new non-singleton coin, you need to output a `CREATE_COIN` condition that uses the amount `-113`.
-When the singleton outer puzzle sees that condition, it filters it out.
-This amount was arbitrarily chosen and is negative because a coin with negative amount cannot exist. Therefore, it is an unlikely accidental output of an inner puzzle.
-This is chosen to prevent an inner puzzle from accidentally melting a singleton by forgetting to create an odd output.
-It must deliberately specify to melt the singleton.
-Keep in mind that the melt value *does* count as the odd output, but is ignored, creating the need to burn one mojo of coin value in order to melt (all of the outputs must be even).
-Usually there will be a transaction fee anyways so it likely just becomes part of that.
-You should also be wary of the amount of control you give to people who you partially lend your singleton to.
-If they can freely create conditions, it may be possible for them to melt your singleton against your wishes.
+- **Singletons are always odd.** In order to assure that a singleton does not duplicate itself, it needs some way to verify that its children do not consist of more than one new singleton.
+  It does this by verifying that only one of its children is odd.
+  It is either a new singleton, or it is the **melt value** and will be ignored (more on that later).
+  Odd was chosen over even because you may want to have singletons create other, non-singleton coins at times (like 0 amount messages for the DID) and having the singleton be odd just makes this easier.
+  Coins can be multiples of 10 so you can send a full XCH rather than an XCH and a mojo.
+  No matter how many even amounts you subtract from an odd amount, the end result will always be odd.
+- **Singletons always wrap their odd child.** This abstracts some of the singleton functionality away from the inner puzzles.
+  If an inner puzzle creates an odd coin, it doesn't have to worry about making it a singleton, the [outer puzzle will take care of that](https://chialisp.com/docs/common_functions/#outer-and-inner-puzzles).
+  It also prevents an inner puzzle from accidentally melting the singleton by forgetting to wrap its odd output.
+- **A specific magic melt value determines whether the singleton wraps its child.** If you would like to destroy a singleton and use its amount to create a new non-singleton coin, you need to output a `CREATE_COIN` condition that uses the amount `-113`.
+  When the singleton outer puzzle sees that condition, it filters it out.
+  This amount was arbitrarily chosen and is negative because a coin with negative amount cannot exist. Therefore, it is an unlikely accidental output of an inner puzzle.
+  This is chosen to prevent an inner puzzle from accidentally melting a singleton by forgetting to create an odd output.
+  It must deliberately specify to melt the singleton.
+  Keep in mind that the melt value _does_ count as the odd output, but is ignored, creating the need to burn one mojo of coin value in order to melt (all of the outputs must be even).
+  Usually there will be a transaction fee anyways so it likely just becomes part of that.
+  You should also be wary of the amount of control you give to people who you partially lend your singleton to.
+  If they can freely create conditions, it may be possible for them to melt your singleton against your wishes.
 
 ## The Launcher
 
@@ -48,7 +48,7 @@ We then need to curry this launcher puzzle hash into our singleton and have the 
 Then, when people look at our singleton, they can see that the launcher puzzle hash is the hash of what they know to be a puzzle that creates only one singleton.
 They don't need to go back to the original parent and verify because the singleton puzzle takes care of that right from the start!
 
-So what does the launcher look like?  Here's the source:
+So what does the launcher look like? Here's the source:
 
 ```chialisp
 (mod (singleton_full_puzzle_hash amount key_value_list)
@@ -68,7 +68,7 @@ So what does the launcher look like?  Here's the source:
 )
 ```
 
-Essentially two lines, so not too bad right?  One of the first things you may notice is that we don't curry anything in.
+Essentially two lines, so not too bad right? One of the first things you may notice is that we don't curry anything in.
 We actually cannot curry anything in because we want this puzzle hash to be constant among all singletons.
 That way, even if someone isn't familiar with us, they know that if we came from this specific launcher puzzle hash, we can be trusted to be a unique singleton.
 
@@ -273,7 +273,7 @@ Here's the full source, we'll break it down after:
 )
 ```
 
-Quite a bit isn't it?  Let's start with the arguments:
+Quite a bit isn't it? Let's start with the arguments:
 
 ```chialisp
 (
@@ -286,21 +286,23 @@ Quite a bit isn't it?  Let's start with the arguments:
 ```
 
 `SINGLETON_STRUCT` is a collection of three things:
-* The tree hash of this module
-* The launcher coin ID (this acts as the unique ID for the singleton)
-* The launcher puzzle hash
+
+- The tree hash of this module
+- The launcher coin ID (this acts as the unique ID for the singleton)
+- The launcher puzzle hash
 
 The reason they are grouped into a single structure is because they are passed through almost every function. It increases readability and optimization if they are passed through as a single variable until it is time to deconstruct them.
 
 `INNER_PUZZLE` is the inner puzzle to this wrapper puzzle.
 
 `lineage_proof` takes one of two formats:
-* `(parent_parent_coin_info parent_inner_puzzle_hash parent_amount)`
-* `(parent_parent_coin_info parent_amount)`
-You may wonder, given the similarity, why not just use the first format?  We use the separate formats because we use the length of the structure to tip us off to whether or not this is the **eve spend**.
-The eve spend is the first spend of a singleton after its creation.
-We use this lineage proof to verify that our parent was a singleton.
-However, in the first spend, the parent is not a singleton and we actually execute a different path where we verify that our parent was a singleton launcher instead.
+
+- `(parent_parent_coin_info parent_inner_puzzle_hash parent_amount)`
+- `(parent_parent_coin_info parent_amount)`
+  You may wonder, given the similarity, why not just use the first format? We use the separate formats because we use the length of the structure to tip us off to whether or not this is the **eve spend**.
+  The eve spend is the first spend of a singleton after its creation.
+  We use this lineage proof to verify that our parent was a singleton.
+  However, in the first spend, the parent is not a singleton and we actually execute a different path where we verify that our parent was a singleton launcher instead.
 
 `my_amount` is the amount of the coin being spent and will be asserted implicitly through ASSERT_MY_COIN_ID.
 
@@ -368,7 +370,7 @@ For now, just know that it is accessing the correct values from the lineage proo
 The first if statement checks if `lineage_proof` indicates that this is not the eve spend (three proof elements instead of two).
 If it is not the eve spend, it calculates our ID using the information in the `lineage_proof` to generate our parent ID.
 
-If it *is* the eve spend, there is an extra check which verifies that the launcher ID and launcher puzzle hash we have (both inside the `SINGLETON_STRUCT`) are correct. We do so by calculating the launcher ID from information in our lineage proof and the launcher puzzle hash.
+If it _is_ the eve spend, there is an extra check which verifies that the launcher ID and launcher puzzle hash we have (both inside the `SINGLETON_STRUCT`) are correct. We do so by calculating the launcher ID from information in our lineage proof and the launcher puzzle hash.
 We then assert that it is equal to the curried in value.
 This is an extremely important step because it ensures that every singleton after this singleton can trust the launcher ID and puzzle hash since it will be forcefully curried in from this "eve" singleton and every child singleton knows that the eve singleton checked it.
 

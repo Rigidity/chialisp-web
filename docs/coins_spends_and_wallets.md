@@ -82,28 +82,28 @@ This can be done by having the result of an evaluation be a list of **conditions
 
 ### Conditions
 
-Conditions are split into two categories: *"this spend is only valid if X"* and *"if this spend is valid then X"*.
+Conditions are split into two categories: _"this spend is only valid if X"_ and _"if this spend is valid then X"_.
 
 Here is the complete list of conditions along with their format and behaviour.
 
-* **AGG_SIG_UNSAFE - [49] - (49 pubkey message)**: This spend is only valid if the attached aggregated signature contains a signature from the given public key of the given message. This is labeled unsafe because if you sign a message once, any other coins you have that require that signature may potentially also be unlocked. It's probably better just to use AGG_SIG_ME because of the natural entropy introduced by the coin ID.
-* **AGG_SIG_ME - [50] - (50 pubkey message)**: This spend is only valid if the attached aggregated signature contains a signature from the specified public key of that message concatenated with the coin's ID and the network's genesis challenge.
-* **CREATE_COIN - [51] - (51 puzzlehash amount)**: If this spend is valid, then create a new coin with the given puzzlehash and amount.
-* **RESERVE_FEE - [52] - (52 amount)**: This spend is only valid if there is unused value in this transaction greater than or equal to *amount*, which is explicitly to be used as the fee.
-* **CREATE_COIN_ANNOUNCEMENT - [60] - (60 message)**: If this spend is valid, this creates an ephemeral announcement with an ID dependent on the coin that creates it. Other coins can then assert an announcement exists for inter-coin communication inside a block.
-* **ASSERT_COIN_ANNOUNCEMENT - [61] - (61 announcementID)**: This spend is only valid if there was an announcement in this block matching the announcementID.
-The announcementID is the hash of the message that was announced concatenated with the coin ID of the coin that announced it `announcementID == sha256(coinID + message)`.
-* **CREATE_PUZZLE_ANNOUNCEMENT - [62] - (62 message)**: If this spend is valid, this creates an ephemeral announcement with an ID dependent on the puzzle that creates it. Other coins can then assert an announcement exists for inter-coin communication inside a block.
-* **ASSERT_PUZZLE_ANNOUNCEMENT - [63] - (63 announcementID)**: This spend is only valid if there was an announcement in this block matching the announcementID.
-The announcementID is the message that was announced concatenated with the puzzle hash of the coin that announced it `announcementID == sha256(puzzle_hash + message)`.
-* **ASSERT_MY_COIN_ID - [70] - (70 coinID)**: This spend is only valid if the presented coin ID is exactly the same as the ID of the coin that contains this puzzle.
-* **ASSERT_MY_PARENT_ID - [71] - (71 parentID)**: This spend is only valid if the presented parent coin info is exactly the same as the parent coin info of the coin that contains this puzzle.
-* **ASSERT_MY_PUZZLEHASH - [72] - (72 puzzlehash)**: This spend is only valid if the presented puzzle hash is exactly the same as the puzzle hash of the coin that contains this puzzle.
-* **ASSERT_MY_AMOUNT - [73] - (73 amount)**: This spend is only valid if the presented amount is exactly the same as the amount of the coin that contains this puzzle.
-* **ASSERT_SECONDS_RELATIVE - [80] - (80 seconds)**: This spend is only valid if the given time has passed since this coin was created. The coin's creation time or "birthday" is defined by the timestamp of the previous block *not* the actual block in which it was created. Similarly, the previous block's timestamp is used as the current time when evaluating these time locks.
-* **ASSERT_SECONDS_ABSOLUTE - [81] - (81 time)**: This spend is only valid if the timestamp on this block is greater than the specified timestamp. Again, the coin's birthday and the current time are defined by the timestamp of the previous block.
-* **ASSERT_HEIGHT_RELATIVE - [82] - (82 block_age)**: This spend is only valid if the specified number of blocks have passed since this coin was created.
-* **ASSERT_HEIGHT_ABSOLUTE - [83] - (83 block_height)**: This spend is only valid if the given block_height has been reached.
+- **AGG_SIG_UNSAFE - [49] - (49 pubkey message)**: This spend is only valid if the attached aggregated signature contains a signature from the given public key of the given message. This is labeled unsafe because if you sign a message once, any other coins you have that require that signature may potentially also be unlocked. It's probably better just to use AGG_SIG_ME because of the natural entropy introduced by the coin ID.
+- **AGG_SIG_ME - [50] - (50 pubkey message)**: This spend is only valid if the attached aggregated signature contains a signature from the specified public key of that message concatenated with the coin's ID and the network's genesis challenge.
+- **CREATE_COIN - [51] - (51 puzzlehash amount)**: If this spend is valid, then create a new coin with the given puzzlehash and amount.
+- **RESERVE_FEE - [52] - (52 amount)**: This spend is only valid if there is unused value in this transaction greater than or equal to _amount_, which is explicitly to be used as the fee.
+- **CREATE_COIN_ANNOUNCEMENT - [60] - (60 message)**: If this spend is valid, this creates an ephemeral announcement with an ID dependent on the coin that creates it. Other coins can then assert an announcement exists for inter-coin communication inside a block.
+- **ASSERT_COIN_ANNOUNCEMENT - [61] - (61 announcementID)**: This spend is only valid if there was an announcement in this block matching the announcementID.
+  The announcementID is the hash of the message that was announced concatenated with the coin ID of the coin that announced it `announcementID == sha256(coinID + message)`.
+- **CREATE_PUZZLE_ANNOUNCEMENT - [62] - (62 message)**: If this spend is valid, this creates an ephemeral announcement with an ID dependent on the puzzle that creates it. Other coins can then assert an announcement exists for inter-coin communication inside a block.
+- **ASSERT_PUZZLE_ANNOUNCEMENT - [63] - (63 announcementID)**: This spend is only valid if there was an announcement in this block matching the announcementID.
+  The announcementID is the message that was announced concatenated with the puzzle hash of the coin that announced it `announcementID == sha256(puzzle_hash + message)`.
+- **ASSERT_MY_COIN_ID - [70] - (70 coinID)**: This spend is only valid if the presented coin ID is exactly the same as the ID of the coin that contains this puzzle.
+- **ASSERT_MY_PARENT_ID - [71] - (71 parentID)**: This spend is only valid if the presented parent coin info is exactly the same as the parent coin info of the coin that contains this puzzle.
+- **ASSERT_MY_PUZZLEHASH - [72] - (72 puzzlehash)**: This spend is only valid if the presented puzzle hash is exactly the same as the puzzle hash of the coin that contains this puzzle.
+- **ASSERT_MY_AMOUNT - [73] - (73 amount)**: This spend is only valid if the presented amount is exactly the same as the amount of the coin that contains this puzzle.
+- **ASSERT_SECONDS_RELATIVE - [80] - (80 seconds)**: This spend is only valid if the given time has passed since this coin was created. The coin's creation time or "birthday" is defined by the timestamp of the previous block _not_ the actual block in which it was created. Similarly, the previous block's timestamp is used as the current time when evaluating these time locks.
+- **ASSERT_SECONDS_ABSOLUTE - [81] - (81 time)**: This spend is only valid if the timestamp on this block is greater than the specified timestamp. Again, the coin's birthday and the current time are defined by the timestamp of the previous block.
+- **ASSERT_HEIGHT_RELATIVE - [82] - (82 block_age)**: This spend is only valid if the specified number of blocks have passed since this coin was created.
+- **ASSERT_HEIGHT_ABSOLUTE - [83] - (83 block_height)**: This spend is only valid if the given block_height has been reached.
 
 Conditions are returned as a list of lists in the form:
 
@@ -111,7 +111,7 @@ Conditions are returned as a list of lists in the form:
 ((51 0xabcd1234 200) (50 0x1234abcd "hello") (60 0xdeadbeef))
 ```
 
-*Remember: this is what a puzzle should evaluate to when presented with a solution so that a full-node can understand it.*
+_Remember: this is what a puzzle should evaluate to when presented with a solution so that a full-node can understand it._
 
 Let's create a few examples puzzles and solutions to demonstrate how this is used in practice.
 
@@ -185,7 +185,7 @@ Suppose we lock a coin up using the following puzzle:
 (q . ((51 0x365bdd80582fcc2e4868076ab9f24b482a1f83f6d88fd795c362c43544380e7a 100)))
 ```
 
-Regardless of what solution is passed this puzzle will *always* return instructions to create a new coin with the puzzlehash 0x365bdd80582fcc2e4868076ab9f24b482a1f83f6d88fd795c362c43544380e7a and the amount 100.
+Regardless of what solution is passed this puzzle will _always_ return instructions to create a new coin with the puzzlehash 0x365bdd80582fcc2e4868076ab9f24b482a1f83f6d88fd795c362c43544380e7a and the amount 100.
 
 ```chialisp
 $ brun '(q . ((51 0x365bdd80582fcc2e4868076ab9f24b482a1f83f6d88fd795c362c43544380e7a 100)))' '(80 90 "hello")'
@@ -225,6 +225,7 @@ For example, let's create a puzzle that lets the spender choose the output, but 
 ```chialisp
 (c (q . (51 0xcafef00d 200)) 1)
 ```
+
 This will let the spender return any conditions they want via the solution but will always add the condition to create a coin with the puzzle hash 0xcafef00d and value 200.
 
 ```chialisp
@@ -244,14 +245,16 @@ If you don't have a fundamental understanding of cryptographic signatures, it wi
 You may have seen that one of the conditions above allows you to require a **signature** from the spender of the coin.
 In Chia, we use [BLS Signatures](https://crypto.stanford.edu/~dabo/pubs/papers/BLSmultisig.html) to sign any relevant data.
 
-One helpful feature of BLS signatures is that they can be *non-interactively aggregated*.  You can take a signature from a party you don't trust, and combine it with another signature to produce a single signature that verifies the combination of all of the messages they were signing.
+One helpful feature of BLS signatures is that they can be _non-interactively aggregated_. You can take a signature from a party you don't trust, and combine it with another signature to produce a single signature that verifies the combination of all of the messages they were signing.
 
 For example, if a puzzle returns a set of conditions with multiple AGG_SIG conditions:
+
 ```
 ((AGG_SIG_UNSAFE <pubkey A> <msg A>) (AGG_SIG_UNSAFE <pubkey B> <msg B>))
 ```
+
 the node processing this spend is going to look for an attached signature that is the **aggregation** of a signature from pubkey A on message A as well as a signature from pubkey B on message B.
-The spend will not pass unless there is exactly that combination of signatures.  No more, no less.
+The spend will not pass unless there is exactly that combination of signatures. No more, no less.
 
 ### Example: Signature Locked Coin
 
@@ -282,11 +285,11 @@ Let's pull back and add some context here.
 
 A wallet is some software that has several features that make it easy for a user to interact with coins.
 
-* A wallet keeps track of public and private keys
-* A wallet can generate puzzles and solutions
-* A wallet can sign things with its keys
-* A wallet can identify and remember what coins that the user 'owns'
-* A wallet can spend coins
+- A wallet keeps track of public and private keys
+- A wallet can generate puzzles and solutions
+- A wallet can sign things with its keys
+- A wallet can identify and remember what coins that the user 'owns'
+- A wallet can spend coins
 
 You may be wondering how a wallet is able to identify what coins that the user 'owns' if any person can attempt to spend a coin.
 This is because all wallets already know and agree on what the standard format for sending a coin to somebody is.

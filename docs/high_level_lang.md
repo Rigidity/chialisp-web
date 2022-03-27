@@ -72,11 +72,10 @@ $ run '(qq (c (c (q . 50) (c (q . (unquote (f @))) (c (sha256 2) ()))) (a 5 11))
 (c (c (q . 50) (c (q . 0xdeadbeef) (c (sha256 2) ()))) (a 5 11))
 ```
 
-
 ## Compiling to CLVM with Mod
 
 It is important to remember that in practice smart coins will run using the lower level language, so none of the above operators will work on the network.
-What we *can* do however is compile them down to the lower level language.
+What we _can_ do however is compile them down to the lower level language.
 This is where `mod` comes in.
 `mod` is an operator that lets the runtime know that it needs to be compiling the code rather than actually running it.
 
@@ -125,7 +124,6 @@ A few things to note:
 - Be careful of infinite loops in macros that reference other macros.
 - Comments can be written with semicolons
 - Inline functions are generally more cost effective than regular functions except when reusing calculated arguments: `(defun-inline foo (X) (+ X X)) (foo (* 200 300))` will perform the expensive multiplication twice
-
 
 ## Factorial
 

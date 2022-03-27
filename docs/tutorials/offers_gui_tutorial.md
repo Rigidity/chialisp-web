@@ -8,22 +8,22 @@ sidebar_label: Offers - GUI Tutorial
 
 This tutorial covers Chia offers using the official wallet's graphical user interface.
 
-See also our [command line tutorial](../tutorials/offers_cli_tutorial.md "Offers CLI tutorial") and our [reference document](../puzzles/offers.md "Offers reference").
+See also our [command line tutorial](../tutorials/offers_cli_tutorial.md 'Offers CLI tutorial') and our [reference document](../puzzles/offers.md 'Offers reference').
 
-  >Note: This tutorial occasionally references a token called "CAT King Cole" (CKC). This token is for demonstration purposes only.
+> Note: This tutorial occasionally references a token called "CAT King Cole" (CKC). This token is for demonstration purposes only.
 
 ## Contents:
 
-* [Add a new CAT wallet](#add-a-new-cat-wallet)
-* [Create a single-token offer](#create-a-single-token-offer)
-* [Accept a single-token offer](#accept-a-single-token-offer)
-* [Cancel an offer](#cancel-an-offer)
-* [Create a multiple-token offer](#create-a-multiple-token-offer)
-* [Accept a multiple-token offer](#accept-a-multiple-token-offer)
-* [Potential issues](#potential-issues)
-* [Further reading](#further-reading)
+- [Add a new CAT wallet](#add-a-new-cat-wallet)
+- [Create a single-token offer](#create-a-single-token-offer)
+- [Accept a single-token offer](#accept-a-single-token-offer)
+- [Cancel an offer](#cancel-an-offer)
+- [Create a multiple-token offer](#create-a-multiple-token-offer)
+- [Accept a multiple-token offer](#accept-a-multiple-token-offer)
+- [Potential issues](#potential-issues)
+- [Further reading](#further-reading)
 
------
+---
 
 ## Add a new CAT wallet
 
@@ -31,93 +31,93 @@ In order to create an offer, you must have a wallet for any Chia Asset Tokens (C
 
 For example, here's how to add the Stably USD (USDS) token:
 
-   1. Click "+ ADD TOKEN".
+1.  Click "+ ADD TOKEN".
 
 <figure>
 <img src="/img/offers_img/gui_tutorial/wallet_add/1_xch_balance.png" alt="XCH balance before offer"/>
 </figure>
 <br/>
 
-   2. Click the "USDS / Stably USD" button.
+2.  Click the "USDS / Stably USD" button.
 
 <figure>
 <img src="/img/offers_img/gui_tutorial/wallet_add/2_add_usds.png" alt="Add USDS wallet"/>
 </figure>
 <br/>
 
-   3. "Adding USDS token" will be displayed while your new wallet is being created. This will take some time.
+3.  "Adding USDS token" will be displayed while your new wallet is being created. This will take some time.
 
 <figure>
 <img src="/img/offers_img/gui_tutorial/wallet_add/3_adding_usds_token.png" alt="Add USDS wallet"/>
 </figure>
 <br/>
 
-   4. You now have a USDS wallet, in addition to your standard Chia wallet.
+4.  You now have a USDS wallet, in addition to your standard Chia wallet.
 
 <figure>
 <img src="/img/offers_img/gui_tutorial/wallet_add/4_two_wallets.png" alt="Two wallets"/>
 </figure>
 
------
+---
 
 ## Create a single-token offer
 
 In this example, we'll offer 0.1 XCH in exchange for 10 USDS.
 
-   1. Click "MANAGE OFFERS".
+1.  Click "MANAGE OFFERS".
 
 <figure>
 <img src="/img/offers_img/gui_tutorial/offer_single_create/1_usds_wallet.png" alt="Add USDS wallet"/>
 </figure>
 <br/>
 
-   2. Click "CREATE AN OFFER".
+2.  Click "CREATE AN OFFER".
 
 <figure>
 <img src="/img/offers_img/gui_tutorial/offer_single_create/2_create_offer.png" alt="Create offer"/>
 </figure>
 <br/>
 
-   3. The "Create an Offer" dialog will appear. When you select an asset type to be offered, the dialog will display your spendable balance. After you have filled in the details of your offer, you will also be shown the exchange rate of the assets you want to trade, using the values you have entered.
-   <br/><br/>When you are satisfied with your offer, click "SAVE OFFER".
+3.  The "Create an Offer" dialog will appear. When you select an asset type to be offered, the dialog will display your spendable balance. After you have filled in the details of your offer, you will also be shown the exchange rate of the assets you want to trade, using the values you have entered.
+    <br/><br/>When you are satisfied with your offer, click "SAVE OFFER".
 
 <figure>
 <img src="/img/offers_img/gui_tutorial/offer_single_create/3_save_offer.png" alt="Save offer"/>
 </figure>
 <br/>
 
-   4. Choose a name and location for your offer file.
-   <br/>(Depending on your operating system, this dialog may appear different to what is shown.)
+4.  Choose a name and location for your offer file.
+    <br/>(Depending on your operating system, this dialog may appear different to what is shown.)
 
 <figure>
 <img src="/img/offers_img/gui_tutorial/offer_single_create/4_save_dialog.png" alt="Save offer"/>
 </figure>
 <br/>
 
-   5. A new dialog will appear, suggesting a few locations to share your offer. This is strictly optional. You could also directly share your offer file with a friend, or on social media, or anywhere else you want.
-   <br/><br/>That said, for this tutorial we'll click the "OFFERBIN" button.
+5.  A new dialog will appear, suggesting a few locations to share your offer. This is strictly optional. You could also directly share your offer file with a friend, or on social media, or anywhere else you want.
+    <br/><br/>That said, for this tutorial we'll click the "OFFERBIN" button.
 
 <figure>
 <img src="/img/offers_img/gui_tutorial/offer_single_create/5_share_offer.png" alt="Share offer"/>
 </figure>
 <br/>
 
-   6. You will be shown the details of your offer once again. Click the "SHARE" button to share your offer.
+6.  You will be shown the details of your offer once again. Click the "SHARE" button to share your offer.
 
 <figure>
 <img src="/img/offers_img/gui_tutorial/offer_single_create/6_share_on_offer_bin.png" alt="Share on offer bin"/>
 </figure>
 <br/>
 
-   7. Your offer has now been shared on Offer Bin, a website dedicated to sharing Chia offers. Offer Bin is not affiliated with Chia Network Inc.
-   <br/><br/>You now have the option to view your offer on Offer Bin, copy the URL to share in more locations, or simply wait for someone to accept your offer.
+7.  Your offer has now been shared on Offer Bin, a website dedicated to sharing Chia offers. Offer Bin is not affiliated with Chia Network Inc.
+    <br/><br/>You now have the option to view your offer on Offer Bin, copy the URL to share in more locations, or simply wait for someone to accept your offer.
 
 <figure>
 <img src="/img/offers_img/gui_tutorial/offer_single_create/7_view_on_offer_bin.png" alt="View on offer bin"/>
 </figure>
 <br/>
 
-   8. There is now one offer in the "Manage Offers" dialog. Its status is "Pending Accept".
+8.  There is now one offer in the "Manage Offers" dialog. Its status is "Pending Accept".
 
 <figure>
 <img src="/img/offers_img/gui_tutorial/offer_single_create/8_pending_accept.png" alt="Pending accept"/>
@@ -125,160 +125,162 @@ In this example, we'll offer 0.1 XCH in exchange for 10 USDS.
 <br/>
 
 Congratulations! You have created an offer. A few things to note:
-* Your wallet has reserved the coin(s) necessary to complete the offer.
-* The blockchain has not recorded this offer.
-* You can distribute the offer file wherever you want.
-* Anyone who sees the offer file can attempt to accept it.
 
------
+- Your wallet has reserved the coin(s) necessary to complete the offer.
+- The blockchain has not recorded this offer.
+- You can distribute the offer file wherever you want.
+- Anyone who sees the offer file can attempt to accept it.
+
+---
 
 ## Accept a single-token offer
 
 This example will use a different computer to accept the offer that was created in the previous example. Keep in mind, offers are accepted on a first-come, first-served basis.
 <br/>
-   1. From your light wallet's main dialog, click "MANAGE OFFERS".
+
+1.  From your light wallet's main dialog, click "MANAGE OFFERS".
 
 <figure>
 <img src="/img/offers_img/gui_tutorial/offer_single_accept/1_chia_wallet.png" alt="Chia wallet"/>
 </figure>
 <br/>
 
-  2. Click "VIEW AN OFFER".
+2. Click "VIEW AN OFFER".
 
 <figure>
 <img src="/img/offers_img/gui_tutorial/offer_single_accept/2_view_an_offer.png" alt="View an offer"/>
 </figure>
 <br/>
 
-   3. You can either paste the contents of an offer file, or load the whole file. In this example, we'll do the latter.
+3.  You can either paste the contents of an offer file, or load the whole file. In this example, we'll do the latter.
 
 <figure>
 <img src="/img/offers_img/gui_tutorial/offer_single_accept/3_select_offer_file.png" alt="Select offer file"/>
 </figure>
 <br/>
 
-   4. A new dialog will open. This may look different than what is pictured, depending on your operating system.
-   <br/><br/>Find the offer file and click "Open". Keep in mind, the name of the offer file doesn't necessarily reflect the actual offer.
+4.  A new dialog will open. This may look different than what is pictured, depending on your operating system.
+    <br/><br/>Find the offer file and click "Open". Keep in mind, the name of the offer file doesn't necessarily reflect the actual offer.
 
 <figure>
 <img src="/img/offers_img/gui_tutorial/offer_single_accept/4_open.png" alt="Open"/>
 </figure>
 <br/>
 
-  5. You'll be shown a summary of the offer. You can add an optional fee (payable in XCH) if you want Chia's blockchain to prioritize your offer. If you agree with the terms, click "ACCEPT OFFER".
+5. You'll be shown a summary of the offer. You can add an optional fee (payable in XCH) if you want Chia's blockchain to prioritize your offer. If you agree with the terms, click "ACCEPT OFFER".
 
 <figure>
 <img src="/img/offers_img/gui_tutorial/offer_single_accept/5_accept_offer.png" alt="Accept offer"/>
 </figure>
 <br/>
 
-  6. You'll be given a chance to cancel your acceptance of the offer. Click "ACCEPT OFFER" to continue.
+6. You'll be given a chance to cancel your acceptance of the offer. Click "ACCEPT OFFER" to continue.
 
 <figure>
 <img src="/img/offers_img/gui_tutorial/offer_single_accept/6_accept_offer.png" alt="Accept offer"/>
 </figure>
 <br/>
 
-   7. After a few seconds, you'll receive a "Success" message. This means the offer has been completed and sent to the blockchain for confirmation.
+7.  After a few seconds, you'll receive a "Success" message. This means the offer has been completed and sent to the blockchain for confirmation.
 
 <figure>
 <img src="/img/offers_img/gui_tutorial/offer_single_accept/7_success.png" alt="Success"/>
 </figure>
 <br/>
 
-   8. The offer is now in the "Pending Confirm" state.
+8.  The offer is now in the "Pending Confirm" state.
 
 <figure>
 <img src="/img/offers_img/gui_tutorial/offer_single_accept/8_pending_confirm.png" alt="Pending confirm"/>
 </figure>
 <br/>
 
-   9. The offer will take a few minutes to be confirmed. Note that this time can vary, depending on how full the mempool is and whether you included a fee upon accepting the offer.
+9.  The offer will take a few minutes to be confirmed. Note that this time can vary, depending on how full the mempool is and whether you included a fee upon accepting the offer.
 
 <figure>
 <img src="/img/offers_img/gui_tutorial/offer_single_accept/9_confirmed.png" alt="Confirmed"/>
 </figure>
 <br/>
 
-   10. After the offer has been confirmed, your new balance will be shown in your wallet.
+10. After the offer has been confirmed, your new balance will be shown in your wallet.
 
 <figure>
 <img src="/img/offers_img/gui_tutorial/offer_single_accept/10_wallet_post_trade.png" alt="Wallet post trade"/>
 </figure>
 
------
+---
 
 ## Cancel an offer
 
 You can cancel any offer you created, as long as it has not already been accepted.
 
-   1. In the "Manage Offers" dialog, locate the offer you want to cancel. It must be in the "Pending Accept" state.
-   <br/><br/>Click the three dots in the "Actions" column.
+1.  In the "Manage Offers" dialog, locate the offer you want to cancel. It must be in the "Pending Accept" state.
+    <br/><br/>Click the three dots in the "Actions" column.
 
 <figure>
 <img src="/img/offers_img/gui_tutorial/cancel/1_actions.png" alt="Offer actions"/>
 </figure>
 <br/>
 
-   2. Click "Cancel Offer".
+2.  Click "Cancel Offer".
 
 <figure>
 <img src="/img/offers_img/gui_tutorial/cancel/2_cancel.png" alt="Cancel an offer"/>
 </figure>
 <br/>
 
-   3. The "Cancel Offer" dialog will appear. The default option is to cancel on the blockchain. This option will use your wallet to spend the coins you had offered, and create new coins of the same type and value. This process does not involve taking the other end of the offer, so you will not receive any funds of the type you had requested. The end result is that your wallet's balance will be the same as it was before you made the offer (minus any transaction fees).
-   
-   The advantage of canceling in this manner is that it ensures that nobody can accept your offer in the future. The disadvantages are that you will need to wait a few minutes for your transaction to be processed, and that you may have to pay a transaction fee.
+3.  The "Cancel Offer" dialog will appear. The default option is to cancel on the blockchain. This option will use your wallet to spend the coins you had offered, and create new coins of the same type and value. This process does not involve taking the other end of the offer, so you will not receive any funds of the type you had requested. The end result is that your wallet's balance will be the same as it was before you made the offer (minus any transaction fees).
+
+The advantage of canceling in this manner is that it ensures that nobody can accept your offer in the future. The disadvantages are that you will need to wait a few minutes for your transaction to be processed, and that you may have to pay a transaction fee.
 
 <figure>
 <img src="/img/offers_img/gui_tutorial/cancel/3_cancel_on_chain.png" alt="Cancel on chain"/>
 </figure>
 <br/>
 
-   4. If you uncheck the checkbox, your wallet will un-reserve the coins for your offer. However, nothing will be recorded on the blockchain. If you have copied your offer file elsewhere, someone could still accept it.
+4.  If you uncheck the checkbox, your wallet will un-reserve the coins for your offer. However, nothing will be recorded on the blockchain. If you have copied your offer file elsewhere, someone could still accept it.
 
-   The advantages of this option are that it will cancel your offer instantly, and there's no need to include a fee.
+The advantages of this option are that it will cancel your offer instantly, and there's no need to include a fee.
 
 <figure>
 <img src="/img/offers_img/gui_tutorial/cancel/4_cancel_off_chain.png" alt="Cancel off chain"/>
 </figure>
 <br/>
 
-   5. If you left the checkbox checked in the previous step, your offer will enter the "Pending Cancel" state while the cancellation is being recorded on the blockchain. This could take several minutes.
+5.  If you left the checkbox checked in the previous step, your offer will enter the "Pending Cancel" state while the cancellation is being recorded on the blockchain. This could take several minutes.
 
 <figure>
 <img src="/img/offers_img/gui_tutorial/cancel/5_pending_cancel.png" alt="Pending cancel"/>
 </figure>
 <br/>
 
-   6. When your order has been successfully canceled, it will enter the "Cancelled" state. Your funds are now available in your wallet.
+6.  When your order has been successfully canceled, it will enter the "Cancelled" state. Your funds are now available in your wallet.
 
 <figure>
 <img src="/img/offers_img/gui_tutorial/cancel/6_cancelled.png" alt="Cancelled"/>
 </figure>
 
------
+---
 
 ## Create a multiple-token offer
 
 It's easy to create an offer with multiple tokens, on one or both ends of the trade.
 
-   1. In the "Create an Offer" dialog, click the "+" to add more tokens. In order for the "+" to be accessible, you must have a wallet with a token that has not been used in this offer.
+1.  In the "Create an Offer" dialog, click the "+" to add more tokens. In order for the "+" to be accessible, you must have a wallet with a token that has not been used in this offer.
 
 <figure>
 <img src="/img/offers_img/gui_tutorial/offer_multiple_create/1_plus_buttons.png" alt="Plus buttons"/>
 </figure>
 <br/>
 
-   2. When you are satisfied with the number of tokens being offered and received, click "SAVE OFFER".
+2.  When you are satisfied with the number of tokens being offered and received, click "SAVE OFFER".
 
 <figure>
 <img src="/img/offers_img/gui_tutorial/offer_multiple_create/2_save_multiple_offer.png" alt="Save multiple offer"/>
 </figure>
 <br/>
 
-   3. Your new offer, including all tokens, is now in the "Pending Accept" state.
+3.  Your new offer, including all tokens, is now in the "Pending Accept" state.
 
 <figure>
 <img src="/img/offers_img/gui_tutorial/offer_multiple_create/3_manage_multiple.png" alt="Manage multiple offer"/>
@@ -286,24 +288,25 @@ It's easy to create an offer with multiple tokens, on one or both ends of the tr
 
 You now free to share your offer file anywhere you wish, just as you were with the single-token offer.
 
------
+---
 
 ## Accept a multiple-token offer
-   1. The process to accept a multiple-token offer is the same as for a single-token offer.
+
+1.  The process to accept a multiple-token offer is the same as for a single-token offer.
 
 <figure>
 <img src="/img/offers_img/gui_tutorial/offer_multiple_accept/1_multiple_accept_dialog.png" alt="Multiple accept dialog"/>
 </figure>
 <br/>
 
-   2. The confirmation dialog shows all assets involved in the offer.
+2.  The confirmation dialog shows all assets involved in the offer.
 
 <figure>
 <img src="/img/offers_img/gui_tutorial/offer_multiple_accept/2_confirmed.png" alt="Multiple confirmation dialog"/>
 </figure>
 <br/>
 
-   3. After accepting the offer, a new wallet will be created for any tokens the Taker didn't already have.
+3.  After accepting the offer, a new wallet will be created for any tokens the Taker didn't already have.
 
 <figure>
 <img src="/img/offers_img/gui_tutorial/offer_multiple_accept/3_ckc_wallet.png" alt="CKC wallet"/>
@@ -312,7 +315,7 @@ You now free to share your offer file anywhere you wish, just as you were with t
 <img src="/img/offers_img/gui_tutorial/offer_multiple_accept/4_usds_wallet.png" alt="USDS wallet"/>
 </figure>
 
------
+---
 
 ## Potential issues
 
@@ -320,14 +323,14 @@ This section will detail a non-comprehensive list of issues you might encounter 
 
 ## Contents:
 
-* [Maker doesn't have enough money](#maker-doesnt-have-enough-money)
-* [Taker doesn't have enough money](#taker-doesnt-have-enough-money)
-* [Taker accepts an unknown CAT offer](#taker-accepts-an-unknown-cat-offer)
-* [Taker attempts to accept an invalid offer](#taker-attempts-to-accept-an-invalid-offer)
-* [Maker cancels an offer locally, Taker accepts the offer](#maker-cancels-an-offer-locally-taker-accepts-the-offer)
-* [Whole coins must be reserved](#whole-coins-must-be-reserved)
+- [Maker doesn't have enough money](#maker-doesnt-have-enough-money)
+- [Taker doesn't have enough money](#taker-doesnt-have-enough-money)
+- [Taker accepts an unknown CAT offer](#taker-accepts-an-unknown-cat-offer)
+- [Taker attempts to accept an invalid offer](#taker-attempts-to-accept-an-invalid-offer)
+- [Maker cancels an offer locally, Taker accepts the offer](#maker-cancels-an-offer-locally-taker-accepts-the-offer)
+- [Whole coins must be reserved](#whole-coins-must-be-reserved)
 
------
+---
 
 ### Maker doesn't have enough money
 
@@ -349,11 +352,12 @@ The maker attempts to make an ambitious offer: 100 XCH for 1 million CKC.
 <br/>
 
 However, the Maker does not have enough money to create this offer. As a result, an Error is displayed:
+
 <figure>
 <img src="/img/offers_img/gui_tutorial/issues/04_100xch_for_1mckc_fail.png" alt="Amount exceeds spendable balance"/>
 </figure>
 
------
+---
 
 ### Taker doesn't have enough money
 
@@ -377,7 +381,7 @@ However, the Taker does not have enough money to accept this offer. As a result,
 <img src="/img/offers_img/gui_tutorial/issues/06_insufficient_funds.png" alt="Insufficient funds"/>
 </figure>
 
------
+---
 
 ### Taker accepts an unknown CAT offer
 
@@ -419,7 +423,7 @@ Luckily, it is easy to avoid this scam by cross-referencing the unknown CAT's ID
 
 Chia does install a list of known CATs by default, so this scam should be rare, but you should always be diligent in scrutinizing offers for unknown CATs.
 
------
+---
 
 ### Taker attempts to accept an invalid offer
 
@@ -431,13 +435,14 @@ Any potential Takers will be conveyed this information upon viewing the offer. F
 <img src="/img/offers_img/gui_tutorial/issues/11_invalid_offer.png" alt="Invalid offer"/>
 </figure>
 
------
+---
 
 ### Maker cancels an offer locally, Taker accepts the offer
 
 This example will demonstrate that if you need to cancel an offer, you should always do so on-chain unless you are certain the offer file has not left your computer.
 
 Let's say a Maker has 0.1 XCH and 1 USDS:
+
 <figure>
 <img src="/img/offers_img/gui_tutorial/issues/12_0.1xch_wallet.png" alt="0.1 XCH in wallet"/>
 </figure>
@@ -447,18 +452,21 @@ Let's say a Maker has 0.1 XCH and 1 USDS:
 <br/>
 
 The Maker offers 0.1 XCH in exchange for 10 USDS:
+
 <figure>
 <img src="/img/offers_img/gui_tutorial/issues/14_view_offer_0.1xch_10usds.png" alt="Offer 0.1 XCH for 10 USDS"/>
 </figure>
 <br/>
 
 The Maker then decides to cancel the offer, and unchecks the "Cancel on blockchain" checkbox:
+
 <figure>
 <img src="/img/offers_img/gui_tutorial/issues/15_cancel_off_chain.png" alt="Cancel offer off chain"/>
 </figure>
 <br/>
 
 The offer's state is immediately changed to "Cancelled".
+
 <figure>
 <img src="/img/offers_img/gui_tutorial/issues/16_canceled_off_chain.png" alt="Canceled offer off chain"/>
 </figure>
@@ -488,13 +496,13 @@ If the offer had been canceled on-chain, the reserved coins would have been spen
 
 The lesson here is do _not_ uncheck the "Cancel on blockchain" checkbox unless you're certain the offer file has never left your computer.
 
------
+---
 
 ### Whole coins must be reserved
 
 Under the coin set model, coins can be of any value. When an offer is created, the Maker's wallet must reserve enough coins to meet the requirements of the offer.
 
-The coin set model [has many advantages](https://docs.chia.net/docs/04coin-set-model/what-is-a-coin "Coin set model") over the account model, but it can create some situations that take time to understand.
+The coin set model [has many advantages](https://docs.chia.net/docs/04coin-set-model/what-is-a-coin 'Coin set model') over the account model, but it can create some situations that take time to understand.
 
 For example, let's say a Maker has 1 XCH and 0 USDS:
 
@@ -547,6 +555,7 @@ The Maker can work around this issue by canceling the offer, then breaking the s
 <br/>
 
 The Maker can then recreate the same offer. The new offer's details show a coin worth 0.9 XCH being reserved:
+
 <figure>
 <img src="/img/offers_img/gui_tutorial/issues/28_0.1_coin_in_offer.png" alt="New details of Maker's offer"/>
 </figure>
@@ -555,12 +564,14 @@ The Maker can then recreate the same offer. The new offer's details show a coin 
 The Maker's wallet shows a Total Balance of 1 XCH. This is the same as before, but there are now two coins that sum to 1 XCH.
 
 Because there are now two coins in the Maker's wallet, and only one (worth 0.9 XCH) has been reserved for the offer, the Spendable Balance is 0.1 XCH:
+
 <figure>
 <img src="/img/offers_img/gui_tutorial/issues/29_0.1xch_available.png" alt="Maker has 0.1 XCH available"/>
 </figure>
 <br/>
 
 The Maker can now send 0.1 XCH to another wallet, even while the offer is still pending:
+
 <figure>
 <img src="/img/offers_img/gui_tutorial/issues/30_send_while_offer_pending.png" alt="Successful send while offer pending"/>
 </figure>
@@ -568,11 +579,11 @@ The Maker can now send 0.1 XCH to another wallet, even while the offer is still 
 
 One of the Maker's coins has been reserved for the offer, and the other has been sent to another wallet. The Maker can further break apart the large coin as needed.
 
------
+---
 
 ## Further reading
 
-* [Offers blog entry](https://www.chia.net/2022/01/12/chia-offers-are-here-en.html)
-* [Offers reference](../puzzles/offers.md "Offers reference")
-* [CLI tutorial](../tutorials/offers_cli_tutorial.md "Offers CLI tutorial")
-* [Info on the coin set model](https://docs.chia.net/docs/04coin-set-model/what-is-a-coin "Coin set model")
+- [Offers blog entry](https://www.chia.net/2022/01/12/chia-offers-are-here-en.html)
+- [Offers reference](../puzzles/offers.md 'Offers reference')
+- [CLI tutorial](../tutorials/offers_cli_tutorial.md 'Offers CLI tutorial')
+- [Info on the coin set model](https://docs.chia.net/docs/04coin-set-model/what-is-a-coin 'Coin set model')

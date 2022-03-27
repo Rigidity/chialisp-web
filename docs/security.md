@@ -4,7 +4,7 @@ title: 8 - Security
 ---
 
 When writing Chialisp, security concerns should be at the front of your mind.
-The language is specifically designed to secure money on a network with *no centralized authority* to enforce rules.
+The language is specifically designed to secure money on a network with _no centralized authority_ to enforce rules.
 The only person standing in the way of attackers and potentially large sums of money is going to be you.
 
 ## Signing and Asserting Solution Truth
@@ -53,7 +53,7 @@ Not only does it make you commit to the coin ID in the signature (something that
 Exclusion should also be a concern at the forefront of your mind.
 Oftentimes, you will be spending multiple coins in the same bundle, and they should all be tied together into one aggregated signature.
 If you have good reason not to sign one of them, make sure you know what happens if it gets excluded from the bundle.
-Furthermore, aggregated signatures can't be disaggregated into smaller signatures *unless* you have previously signed one of the smaller combinations of public key-message pairs in the bundle. The attacker can exclude the rest of the transactions that contain `AGG_SIG` conditions and reuse the smaller signature again on the remaining transactions.
+Furthermore, aggregated signatures can't be disaggregated into smaller signatures _unless_ you have previously signed one of the smaller combinations of public key-message pairs in the bundle. The attacker can exclude the rest of the transactions that contain `AGG_SIG` conditions and reuse the smaller signature again on the remaining transactions.
 They can also calculate the remaining aggregated signature and perhaps sign every spend except the one the exclude. This is known as **signature subtraction** and is another great reason to use `AGG_SIG_ME` as much as possible.
 
 ## The "Flash Loan from God" attack
@@ -89,7 +89,7 @@ When you solve the puzzle, you have to reveal the password.
 Since any full nodes whom you give your spend to will now be able to see your password, they can change the solution and pay themselves all the money instead!
 
 In order to fix it, it's probably best to curry in a public key that also has to sign for the solution.
-The new puzzle will be able to be spent only with a password *and* only by the person who you have decided owns this coin. Of course, this is not particularly useful most of the time and is usually about as good as a signature locked coin with extra steps.
+The new puzzle will be able to be spent only with a password _and_ only by the person who you have decided owns this coin. Of course, this is not particularly useful most of the time and is usually about as good as a signature locked coin with extra steps.
 Signatures are by far the most secure way to lock up your coins.
 
 ## Conclusion

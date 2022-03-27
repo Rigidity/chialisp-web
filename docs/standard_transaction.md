@@ -15,7 +15,7 @@ This is one half of the functionality we want our standard transaction to have.
 
 However, we also want the ability to pre-commit to a puzzle without revealing it, and let anybody with the knowledge of the "hidden" puzzle spend it.
 
-But how do we pre-commit to this hidden puzzle?  We can curry it in, but if we perform the delegated spend case we will have to reveal the full puzzle including the curried in hidden puzzle and it will no longer be hidden.
+But how do we pre-commit to this hidden puzzle? We can curry it in, but if we perform the delegated spend case we will have to reveal the full puzzle including the curried in hidden puzzle and it will no longer be hidden.
 We can't lock up a coin with the same puzzle anymore, or else people will be able to tell that the puzzle hash is the same and spend it without our consent.
 Our delegated spend might not even make it to the network; a malicious node can just deny our transaction after seeing it and then publish the hidden spend case on their own.
 
@@ -39,22 +39,22 @@ If the solver can correctly reveal BOTH the hidden puzzle and the original publi
 You may wonder why we add the public key from our derived private key to the original public key when it's already part of the derivation.
 This is because we use the synthetic public key to sign for our delegated spends as well.
 When you add two public keys, the private key for the resulting public key is the sum of the original private keys.
-If we didn't add the original public key then anyone who knew the hidden puzzle could derive the synthetic private key and could then perform delegated spends!  Adding original public key ensures that there is still a secret component of the synthetic private key, even though half of can be known.
+If we didn't add the original public key then anyone who knew the hidden puzzle could derive the synthetic private key and could then perform delegated spends! Adding original public key ensures that there is still a secret component of the synthetic private key, even though half of can be known.
 
 This technique is also neat because it allows us to hide the hidden puzzle in a piece of information that was already necessary for the delegated spend.
-It's impossible to guess what the hidden puzzle is, even if it's a standard hidden puzzle!  It's even hard to tell if there's a hidden puzzle at all.
+It's impossible to guess what the hidden puzzle is, even if it's a standard hidden puzzle! It's even hard to tell if there's a hidden puzzle at all.
 This can also contribute to privacy.
 For example, if two parties agree to lock up some coins with a hidden puzzle together, you can share pubkeys and verify that information on the blockchain without revealing anything to the network.
-Then, if you both agree that the coins *can* be spent with the hidden puzzle if either party is dishonest, you can trustlessly delegated spend the coins to the correct destinations and it's impossible to tell that they are not just normal everyday spends.
+Then, if you both agree that the coins _can_ be spent with the hidden puzzle if either party is dishonest, you can trustlessly delegated spend the coins to the correct destinations and it's impossible to tell that they are not just normal everyday spends.
 
 We'll look at the code in a moment, but here's a few terms to know before you look at it:
 
-* **hidden puzzle**: a "hidden puzzle" that can be revealed and used as an alternate way to unlock the underlying funds
-* **synthetic key offset**: a private key cryptographically generated using the hidden puzzle and `original_public_key` as inputs
-* **synthetic public key**: the public key (curried in) that is the sum of `original_public_key` and the public key corresponding to `synthetic_key_offset`
-* **original public key**: a public key, where knowledge of the corresponding private key represents ownership of the coin
-* **delegated puzzle**: a delegated puzzle, as in "graftroot", which should return the desired conditions.
-* **solution**: the solution to the delegated or hidden puzzle
+- **hidden puzzle**: a "hidden puzzle" that can be revealed and used as an alternate way to unlock the underlying funds
+- **synthetic key offset**: a private key cryptographically generated using the hidden puzzle and `original_public_key` as inputs
+- **synthetic public key**: the public key (curried in) that is the sum of `original_public_key` and the public key corresponding to `synthetic_key_offset`
+- **original public key**: a public key, where knowledge of the corresponding private key represents ownership of the coin
+- **delegated puzzle**: a delegated puzzle, as in "graftroot", which should return the desired conditions.
+- **solution**: the solution to the delegated or hidden puzzle
 
 ## The Chialisp
 
@@ -121,10 +121,11 @@ First, let's talk about the arguments:
 
 All of these terms are defined above.
 When we solve this puzzle:
-* `SYNTHETIC_PUBLIC_KEY` is curried in
-* We pass in `original_public_key` if it's the hidden spend or `()` if it's the delegated spend
-* `delegated_puzzle` is the hidden puzzle if it's the hidden spend, or the delegated puzzle if it's the delegated spend
-* `solution` is the solution to whatever is passed into `delegated_puzzle`
+
+- `SYNTHETIC_PUBLIC_KEY` is curried in
+- We pass in `original_public_key` if it's the hidden spend or `()` if it's the delegated spend
+- `delegated_puzzle` is the hidden puzzle if it's the hidden spend, or the delegated puzzle if it's the delegated spend
+- `solution` is the solution to whatever is passed into `delegated_puzzle`
 
 As with most Chialisp programs, we'll start looking at the implementation from the bottom:
 
@@ -175,8 +176,8 @@ We pass the resulting hash to `pubkey_for_exp` which turns our private key into 
 Then, we `point_add` this generated public key to our original pubkey to get our synthetic public key.
 If it equals the curried in one, this function passes, otherwise it returns `()` and the `assert` from the previous function raises.
 
-
 ## Conclusion
+
 This puzzle secures almost all of the coins on the Chia network.
 When you use the Chia Network wallet software, it is crawling the blockchain looking for coins locked up with this specific format.
 The `SYNTHETIC_PUBLIC_KEY` it is looking for is actually using a hidden puzzle of `(=)` which is obviously invalid and fails immediately.

@@ -10,7 +10,7 @@ Let's go over some tricks now that you can use to make catching the bugs in your
 ## Verbose output
 
 Both `run` and `brun` have a `-v` flag for printing verbose outputs.
-This output is *very* verbose and shows every evaluation that the program made before it finished or exited.
+This output is _very_ verbose and shows every evaluation that the program made before it finished or exited.
 Let take a look at an example:
 
 ```chialisp
@@ -44,7 +44,6 @@ We should have quoted the atom before we passed it to `sha256`.
 
 This error is perhaps the most common error that will come up when you run a new program.
 It means that you have tried to traverse a tree with an index that is deeper than the tree is.
-
 
 What this is usually trying to convey is that something is wrong with a variable that you are trying to reference.
 Make sure to check your arguments are being properly passed from one function to the next and that all of your code is referencing them within the correct scope.

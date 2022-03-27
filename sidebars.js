@@ -11,17 +11,14 @@ module.exports = {
       'security',
       'debugging',
       'optimization',
-      'glossary'
+      'glossary',
     ],
-    CLVM: [
-      'ref/clvm',
-      'ref/serialization'
-    ],
+    CLVM: ['ref/clvm', 'ref/serialization'],
     Puzzles: [
       'puzzles/singletons',
       'puzzles/pooling',
       'puzzles/cats',
-      'puzzles/offers'
+      'puzzles/offers',
     ],
     Tutorials: [
       'tutorials/why_chia_is_great',
@@ -41,7 +38,7 @@ module.exports = {
       'tutorials/single_issuance_CAT',
       'tutorials/multiple_issuance_CAT',
       'tutorials/offers_gui_tutorial',
-      'tutorials/offers_cli_tutorial'
+      'tutorials/offers_cli_tutorial',
     ],
     FAQ: ['faq'],
   },

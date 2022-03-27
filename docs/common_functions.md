@@ -43,7 +43,7 @@ The compiler will only include things that you use, so don't worry about includi
 ## sha256tree
 
 When puzzles are hashed, they are not simply serialized and passed to sha256.
-Instead, we take the *tree hash* of the puzzle.
+Instead, we take the _tree hash_ of the puzzle.
 
 Recall that every clvm program can be represented as a binary tree.
 Every object is either an atom (a leaf of the tree) or a cons box (a branch of the tree).
@@ -64,19 +64,18 @@ Here's what that looks like in Chialisp:
 It is extremely useful to calculate tree hashes within a Chialisp puzzle.
 You can assert puzzles of other coins, condense puzzles for easier signing, and make CREATE_COIN conditions that are dependent on some passed in data.
 
-
 ## Currying
 
-_Currying_ is named in honor of the mathematician Haskell Curry. In math, currying is the technique of converting a function that takes multiple arguments into a sequence of functions that each take a single argument. For more information on the mathematical concept of currying, see [Wikipedia](https://en.wikipedia.org/wiki/Currying "Currying in math").
+_Currying_ is named in honor of the mathematician Haskell Curry. In math, currying is the technique of converting a function that takes multiple arguments into a sequence of functions that each take a single argument. For more information on the mathematical concept of currying, see [Wikipedia](https://en.wikipedia.org/wiki/Currying 'Currying in math').
 
-In Chialisp, currying is a technique of pre-committing a portion of the solution to a puzzle. It works like hard-coding, but it's more versatile because it allows for the same puzzle to be reused. 
+In Chialisp, currying is a technique of pre-committing a portion of the solution to a puzzle. It works like hard-coding, but it's more versatile because it allows for the same puzzle to be reused.
 
 For example, if a puzzle requires a password in its solution, a Chialisp developer could hard-code the password into the puzzle. But what if the developer later wanted to create a new smart coin with a different password? He or she would have to make a copy of the puzzle and swap out all instances of the old password for the new one. This would be quite inconvenient, especially in a puzzle with a complex solution.
 
 The developer could avoid this inconvenience by using a variable for the password. But that wouldn't be secure -- a farmer could change the password and steal the coin. This is where currying comes in -- it allows the developer to pre-commit without hard-coding.
 
 Currying is an extremely important concept in Chialisp that is responsible for almost the entirety of how state is stored in coins.
-The idea is to pass in arguments to a puzzle *before* it is hashed.
+The idea is to pass in arguments to a puzzle _before_ it is hashed.
 When you curry, you commit to solution values so that the individual solving the puzzle cannot change them.
 Let's take a look at how this is implemented in Chialisp:
 
@@ -104,7 +103,7 @@ Absent of all the quotes, the above code reduces to something like this:
 ```
 
 You can also do the reverse operation.
-Given a program, you can *uncurry* the list of arguments, with a simple `(f (r (r )))`:
+Given a program, you can _uncurry_ the list of arguments, with a simple `(f (r (r )))`:
 
 ```chialisp
 (f (r (r curried_func)))
@@ -304,17 +303,17 @@ This is where the exciting stuff happens.
 Since we don't know the inner puzzle, only it's hash, it's impossible to curry it directly into the next puzzle we want to create.
 Furthermore, if we don't want to pass in the whole source of this current module every time that we spend it, we don't have a puzzle to curry things into either.
 
-However, all we care about is generating the correct *puzzle hash* for the next puzzle, and we do have the tree hashes for both this module and the inner puzzle.
-We can use `puzzle-hash-of-curried-function` which allows us to create the puzzle hash of a function given: a) the puzzle hash of that function and b) the puzzle hashes of all of its arguments in reverse order _as though they were a part of a tree hash_.  This means that arguments that are atoms and numbers are expected to be in tree hash form, with a 1 prefix like ```(sha256 (q . 1) my-argument-value)``` and the output of `sha256tree` is suitable for anything involving cons cells.  It would be possible for `puzzle-hash-of-curried-function` to guess these if it took the parameter values themselves but that might require recomputation of expensive hashes.
+However, all we care about is generating the correct _puzzle hash_ for the next puzzle, and we do have the tree hashes for both this module and the inner puzzle.
+We can use `puzzle-hash-of-curried-function` which allows us to create the puzzle hash of a function given: a) the puzzle hash of that function and b) the puzzle hashes of all of its arguments in reverse order _as though they were a part of a tree hash_. This means that arguments that are atoms and numbers are expected to be in tree hash form, with a 1 prefix like `(sha256 (q . 1) my-argument-value)` and the output of `sha256tree` is suitable for anything involving cons cells. It would be possible for `puzzle-hash-of-curried-function` to guess these if it took the parameter values themselves but that might require recomputation of expensive hashes.
 
-Other implementation details of this library are a bit much to go into in this part of the tutorial but, in essence, it allows us to *resume* a tree hash that we have completed except for the last step.
+Other implementation details of this library are a bit much to go into in this part of the tutorial but, in essence, it allows us to _resume_ a tree hash that we have completed except for the last step.
 
-And that's it!  When this coin is created, it can only be spent by a password that hashes to the curried in PASSWORD_HASH.
+And that's it! When this coin is created, it can only be spent by a password that hashes to the curried in PASSWORD_HASH.
 The inner puzzle can be anything that you want including other outer puzzles that have their own inner puzzles.
-Whatever coins get created as a result of that inner puzzle will be "wrapped" by this same outer puzzle ensuring that every child of this coin is locked by a password *forever*.
+Whatever coins get created as a result of that inner puzzle will be "wrapped" by this same outer puzzle ensuring that every child of this coin is locked by a password _forever_.
 
-We created a simple coin, but you can see the potential of this. You can enforce a set of rules not only on a coin that you lock up, but on *every* descendant coin.
-Not only that, the rules can be enforced *on top of other smart coins*.
+We created a simple coin, but you can see the potential of this. You can enforce a set of rules not only on a coin that you lock up, but on _every_ descendant coin.
+Not only that, the rules can be enforced _on top of other smart coins_.
 In the Chialisp ecosystem, all smart coins are interoperable with each other unless otherwise specified by one of the puzzles in the stack. The possibilities are endless and represent the vast programmability that Chialisp enables for coins.
 
 In the next section, we'll talk about the standard transaction format on the Chia network.

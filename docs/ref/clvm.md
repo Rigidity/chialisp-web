@@ -6,29 +6,28 @@ sidebar_label: CLVM Reference
 
 The clvm is a small, tightly defined VM that defines the semantics of CLVM programs run during Chia blockchain validation. It serves as a target language for higher level languages, especially Chialisp.
 
-
 ## Definitions
 
-* **CLVM Assembly** - The textual representation of a CLVM program.
-* **CLVM Bytecode** - The serialized form of a CLVM program.
-* **Chialisp** - A higher-level language, built on top of CLVM.
-* **CLVM Object** - The underlying data type in the CLVM. An atom or a cons pair.
-* **Atom** - The datatype for values in the CLVM. Atoms are immutable byte arrays. Atoms are untyped and are used to encode all strings, integers, and keys. The only things in the CLVM which are not atoms are cons pairs. Atom properties are length, and the bytes in the atom.
-* **cons pair** - An immutable ordered pair of references to other CLVM objects. One of two data types in the CLVM. The syntax for a cons pair is a dotted pair. Also called `cons cell` or `cons box`.
-* **slot** - One of the cells in a cons box. right or left. Accessed with `f` (first) or `r` (rest).
-* **nil** - nil is the special value represented by the zero length byte array. This value represents zero, the empty string, false, and the empty list. Nil is represented in CLVM assembly as `()`, `0`, or `''`.
-* **Value** - We use value to mean an abstract value like `1` (an integer), `0xCAFE` (a byte string), `"hello"` (a string) or `(sha256 (q . "hello"))` (a program). Values are represented by CLVM Objects.
-* **List** - CLVM lists follow the lisp convention of being a cons pair containing the first list element in the left slot and the rest of the list in the right slot.
-* **Proper List** - A "proper" list is a chain of cons boxes, each containing a value in the left slot. Each right slot contains either another cons box, or nil, if it is the last pair.
-* **Function** - A function in the CLVM is either a built-in opcode or a user-defined program.
-* **Operator** - An opcode/string specifying a built-in function to use.
-* **Program** - A CLVM object which can be executed.
-* **Opcodes** - An atom corresponding to a reserved keyword. When a list is evaluated with a pre-defined opcode in the first position, the code for that opcode is run.
-* **Keyword** - A reserved word in the CLVM assembly language syntax. The strings used for function lookup by the CLVM.
-* **Tree** - A binary tree can be formed from cons pairs and atoms by allowing the right and left cells of a cons pair to hold either an atom, or a cons pair. Atoms are the leaves of the tree.
-* **Function Parameter** - When a list is evaluated, the first argument is the function, and the other items are parameters. In the program `(+ (q . 1) (q . 2))`, the quoted atoms `1` and `2` are parameters to the operator `+`
-* **Treearg** - These are program arguments passed in from outside the program. They are referenced by integers that describe a path in the argument tree.
-* **Argument** - Outside the context of the CLVM, the term "argument" can mean "program argument" (the "argv" of the C language, for example), or "function argument", among other things. Because of this potential confusion, we avoid using the term "argument" in this document. The context is especially important considering the way in which CLVM programs look up their program arguments.
+- **CLVM Assembly** - The textual representation of a CLVM program.
+- **CLVM Bytecode** - The serialized form of a CLVM program.
+- **Chialisp** - A higher-level language, built on top of CLVM.
+- **CLVM Object** - The underlying data type in the CLVM. An atom or a cons pair.
+- **Atom** - The datatype for values in the CLVM. Atoms are immutable byte arrays. Atoms are untyped and are used to encode all strings, integers, and keys. The only things in the CLVM which are not atoms are cons pairs. Atom properties are length, and the bytes in the atom.
+- **cons pair** - An immutable ordered pair of references to other CLVM objects. One of two data types in the CLVM. The syntax for a cons pair is a dotted pair. Also called `cons cell` or `cons box`.
+- **slot** - One of the cells in a cons box. right or left. Accessed with `f` (first) or `r` (rest).
+- **nil** - nil is the special value represented by the zero length byte array. This value represents zero, the empty string, false, and the empty list. Nil is represented in CLVM assembly as `()`, `0`, or `''`.
+- **Value** - We use value to mean an abstract value like `1` (an integer), `0xCAFE` (a byte string), `"hello"` (a string) or `(sha256 (q . "hello"))` (a program). Values are represented by CLVM Objects.
+- **List** - CLVM lists follow the lisp convention of being a cons pair containing the first list element in the left slot and the rest of the list in the right slot.
+- **Proper List** - A "proper" list is a chain of cons boxes, each containing a value in the left slot. Each right slot contains either another cons box, or nil, if it is the last pair.
+- **Function** - A function in the CLVM is either a built-in opcode or a user-defined program.
+- **Operator** - An opcode/string specifying a built-in function to use.
+- **Program** - A CLVM object which can be executed.
+- **Opcodes** - An atom corresponding to a reserved keyword. When a list is evaluated with a pre-defined opcode in the first position, the code for that opcode is run.
+- **Keyword** - A reserved word in the CLVM assembly language syntax. The strings used for function lookup by the CLVM.
+- **Tree** - A binary tree can be formed from cons pairs and atoms by allowing the right and left cells of a cons pair to hold either an atom, or a cons pair. Atoms are the leaves of the tree.
+- **Function Parameter** - When a list is evaluated, the first argument is the function, and the other items are parameters. In the program `(+ (q . 1) (q . 2))`, the quoted atoms `1` and `2` are parameters to the operator `+`
+- **Treearg** - These are program arguments passed in from outside the program. They are referenced by integers that describe a path in the argument tree.
+- **Argument** - Outside the context of the CLVM, the term "argument" can mean "program argument" (the "argv" of the C language, for example), or "function argument", among other things. Because of this potential confusion, we avoid using the term "argument" in this document. The context is especially important considering the way in which CLVM programs look up their program arguments.
 
 A CLVM program must have an unambiguous definition and meaning, so that Chia block validation and consensus is deterministic. Programs are treated as Merkle trees, uniquely identified by the hash at their root. The program hash can be used to verify that two programs are identical.
 
@@ -65,7 +64,6 @@ The quote opcode is special. When it is recognized by the interpreter, it causes
 A compiled CLVM program can be thought of as a binary tree.
 
 Here is an example of a function invocation (or "function call"). `(+ (q . 1) (q . 2))`. The function is the opcode `+`, a function built-in to the clvm runtime.
-
 
 `(+ (q . 1) (q . 2))`
 
@@ -113,7 +111,7 @@ All arguments of a function are evaluated before being passed to that function.
 
 ## Types
 
-The two types of CLVM Object are *cons pair* and *atom*. They can be distinguished by the **listp** opcode. Atoms in the CLVM language do not carry other type information. However, similarly to the machine code instructions for a CPU, functions interpret atoms in specific predictable ways. Thus, each function imposes a type for each of its arguments.
+The two types of CLVM Object are _cons pair_ and _atom_. They can be distinguished by the **listp** opcode. Atoms in the CLVM language do not carry other type information. However, similarly to the machine code instructions for a CPU, functions interpret atoms in specific predictable ways. Thus, each function imposes a type for each of its arguments.
 
 The value of an atom - its length, and the values of its bytes - are always well defined and unambiguous. Because atoms have no type information, the meaning of an atom is determined when a function is applied to it. In the following example, an atom that was read in as a string is treated as an integer.
 
@@ -122,7 +120,6 @@ The value of an atom - its length, and the values of its bytes - are always well
 And in this example, an atom that was read in as an integer is appended to a string.
 
 `brun '(concat (q . "hello") (q . 49))'` => `"hello1"`
-
 
 ### Atoms as Byte Arrays
 
@@ -150,7 +147,6 @@ You are likely to encounter this when using the output of an int operation as th
 This type represents a point on an elliptic curve over finite field described [here](https://electriccoin.co/blog/new-snark-curve/).
 
 These values are opaque values, 48 bytes in length. The outputs of `pubkey_for_exp` are BLS points. The inputs and outputs of `point_add` are BLS points.
-
 
 ## Treeargs : Program Arguments, and Argument Lookup
 
@@ -233,14 +229,13 @@ which is not the same as a single zero byte.
 
 However, the same is not true for Built-ins.
 `"q"` is not the same as `q`
+
 ```chialisp
 (q . q) => 1
 (q . "q") => 113
 ```
 
 ## Operators are atoms too..
-
-
 
 When you write a program, the first argument in the list is interpreted as an operator.
 However, this operator is also stored as an unsigned int.
@@ -255,11 +250,11 @@ It is the correct output of the program, it is just displayed in an unexpected w
 
 While running a clvm program, checks are made to ensure the CLVM does not enter an undefined state. When a program violates one of these runtime checks, it is said to have caused an error.
 
-* First element in an evaluated list is not a valid function. Example: `("hello" (q . 1))` => `FAIL: unimplemented operator "hello"`
-* Wrong number of arguments. Example: `(lognot (q . 1) (q . 2))` => `FAIL: lognot requires 1 arg`
-* Program evaluation exceeds max cost see [Costs](/docs/ref/clvm#costs)
-* Too many allocations have been performed
-* Argument checking e.g. negative index `run '(substr "abc" -1 -)'` FAIL: invalid indices for substr ("abc" -1 17)
+- First element in an evaluated list is not a valid function. Example: `("hello" (q . 1))` => `FAIL: unimplemented operator "hello"`
+- Wrong number of arguments. Example: `(lognot (q . 1) (q . 2))` => `FAIL: lognot requires 1 arg`
+- Program evaluation exceeds max cost see [Costs](/docs/ref/clvm#costs)
+- Too many allocations have been performed
+- Argument checking e.g. negative index `run '(substr "abc" -1 -)'` FAIL: invalid indices for substr ("abc" -1 17)
 
 An error will cause the program to abort.
 
@@ -271,28 +266,29 @@ Opcodes are functions built in to the CLVM. They are available to any running pr
 
 ## List Operators
 
-**c** *cons* `(c A B)` takes exactly two operands and returns a cons pair with the two objects in it (A in the left, B in the right)
+**c** _cons_ `(c A B)` takes exactly two operands and returns a cons pair with the two objects in it (A in the left, B in the right)
 
 Example: `'(c (q . "A") (q . ()))'` => `(65)`
 
-**f** *first* `(f X)` takes exactly one operand which must be a cons pair, and returns the left half
+**f** _first_ `(f X)` takes exactly one operand which must be a cons pair, and returns the left half
 
-**r** *rest* `(r X)` takes exactly one operand which must be a cons pair, and returns the right half
+**r** _rest_ `(r X)` takes exactly one operand which must be a cons pair, and returns the right half
 
-**l** *listp* `(l X)` takes exactly one operand and returns `()` if it is an atom or `1` if it is a cons pair. In contrast to most other lisps, nil is not a list in CLVM.
+**l** _listp_ `(l X)` takes exactly one operand and returns `()` if it is an atom or `1` if it is a cons pair. In contrast to most other lisps, nil is not a list in CLVM.
 
 ## Control Flow
-**a** *apply* `(a P A)` run the program P with the arguments A. Note that this executes P in a new environment. Using integers to reference values in the solution will reference values in A.
 
-**i** *if* `(i A B C)` takes exactly three operands `A`, `B`, `C`. If `A` is `()`, return `C`. Otherwise, return `B`. Both B and C are evaluated before *if* is evaluated.
+**a** _apply_ `(a P A)` run the program P with the arguments A. Note that this executes P in a new environment. Using integers to reference values in the solution will reference values in A.
 
-**x** *raise exception* `(x X Y ...)` takes an arbitrary number of arguments (even zero). Immediately fail, with the argument list passed up into the (python) exception. No other CLVM instructions are run after this instruction is evaluated.
+**i** _if_ `(i A B C)` takes exactly three operands `A`, `B`, `C`. If `A` is `()`, return `C`. Otherwise, return `B`. Both B and C are evaluated before _if_ is evaluated.
 
-**=** *equal* `(= A B)` returns 1 if `A` and `B` are both atoms and both equal. Otherwise `()`. Do not use this to test if two programs are identical. That is determined by their tree hash. Nil tests equal to zero, but nil is not equal to a single zero byte.
+**x** _raise exception_ `(x X Y ...)` takes an arbitrary number of arguments (even zero). Immediately fail, with the argument list passed up into the (python) exception. No other CLVM instructions are run after this instruction is evaluated.
 
-**>** *greater than* `(> A B)` returns 1 if `A` and `B` are both atoms and A is greater than B, interpreting both as two's complement signed integers. Otherwise `()`. `(> A B)` means `A > B` in infix syntax.
+**=** _equal_ `(= A B)` returns 1 if `A` and `B` are both atoms and both equal. Otherwise `()`. Do not use this to test if two programs are identical. That is determined by their tree hash. Nil tests equal to zero, but nil is not equal to a single zero byte.
 
-**>s** *greater than bytes* `(>s A B)` returns 1 if `A` and `B` are both atoms and A is greater than B, interpreting both as an array of unsigned bytes. Otherwise `()`. Compare to strcmp.
+**>** _greater than_ `(> A B)` returns 1 if `A` and `B` are both atoms and A is greater than B, interpreting both as two's complement signed integers. Otherwise `()`. `(> A B)` means `A > B` in infix syntax.
+
+**>s** _greater than bytes_ `(>s A B)` returns 1 if `A` and `B` are both atoms and A is greater than B, interpreting both as an array of unsigned bytes. Otherwise `()`. Compare to strcmp.
 `(>s "a" "b")` => `()`
 
 **not** `(not A)` returns 1 if `A` evaluates to `()`. Otherwise, returns `()`.
@@ -301,10 +297,9 @@ Example: `'(c (q . "A") (q . ()))'` => `(65)`
 
 **any** `(any A B ...)` takes an arbitrary number of arguments (even zero). Returns 1 if any of the arguments evaluate to something other than `()`. Otherwise, returns `()`.
 
-
 ## Constants
 
-**q** *quote* The form `(q . X)` when evaluated returns X, which is *not* evaluated.
+**q** _quote_ The form `(q . X)` when evaluated returns X, which is _not_ evaluated.
 Example: `(q . "A")` => `65`
 
 ## Integer Operators
@@ -319,7 +314,6 @@ The arithmetic operators `+`, `-`, `*`, `/` and `divmod` treat their arguments a
 
 **`/`** `(/ A B)` divides two integers and returns the floored quotient
 
-
 ### Rounding
 
 ```chialisp
@@ -331,6 +325,7 @@ The arithmetic operators `+`, `-`, `*`, `/` and `divmod` treat their arguments a
 ### Division of negative numbers
 
 The treatment of negative dividend and divisors is as follows:
+
 ```chialisp
 (/ -1 1) => -1
 (/ 1 -1) => -1
@@ -338,14 +333,18 @@ The treatment of negative dividend and divisors is as follows:
 ```
 
 ### Flooring of negative numbers
+
 Note that a division with a remainder always rounds towards negative infinity, not toward zero.
+
 ```chialisp
 (/ -3 2) => -2
 (/ 3 2) => 1
 ```
+
 This means that `-a / b` is not always equal to `-(a / b)`
 
 **divmod** `(divmod A B)` takes two integers and returns a cons-box containing the floored quotient and the remainder.
+
 ```chialisp
 (divmod 10 3)
    => (3 . 1)
@@ -359,7 +358,7 @@ Fail if either A or B is not an atom.
 The shorter atom is sign-extended to equal length as the longer atom.
 
 The `logand`, `logior` and `logxor` accept 0 or more parameters.
-There is an implicit *identity* argument, which is the value all parameters will apply to.
+There is an implicit _identity_ argument, which is the value all parameters will apply to.
 The identity will just be returned in case 0 arguments are given.
 
 **logand** `(logand A B ...)` bitwise **AND** of one or more atoms. Identity is `-1`.
@@ -403,14 +402,14 @@ This is a negative number (in Two's complement) and it's also the minimal repres
 ## Shifts
 
 There are two variants of bit shift operators.
-Arithmetic shift (`ash`) and Logical shift (`lsh`). Both can be used to shift both left and right, the direction is determined by the sign of the *count* argument.
-A positive *count* shifts left, a negative *count* shifts right.
-For both **ash** and **lsh**, if |*count*| exceeds 65535, the operation fails.
+Arithmetic shift (`ash`) and Logical shift (`lsh`). Both can be used to shift both left and right, the direction is determined by the sign of the _count_ argument.
+A positive _count_ shifts left, a negative _count_ shifts right.
+For both **ash** and **lsh**, if |_count_| exceeds 65535, the operation fails.
 The resulting value is treated as a signed integer, and any redundant leading zero-bytes or `0xff` bytes are stripped.
 
-**ash** `(ash A count)` if *count* is positive, return *A* shifted left *count* bits, else returns *A* shifted right by |*count*| bits, sign extended.
+**ash** `(ash A count)` if _count_ is positive, return _A_ shifted left _count_ bits, else returns _A_ shifted right by |_count_| bits, sign extended.
 
-Arithmetic shift treats the value to be shifted (*A*) as a signed integer, and sign extends the left-most bits when when shifting right.
+Arithmetic shift treats the value to be shifted (_A_) as a signed integer, and sign extends the left-most bits when when shifting right.
 
 When shifting left, any new bytes added to the left side of the value are also filled with the sign-extended bit. For example:
 
@@ -448,12 +447,13 @@ Consecutive right shifts of negative numbers will result in a terminal value of 
 ```
 
 A right shift of `-1` by any amount is still `-1`:
+
 ```chialisp
 (ash -1 -99)
    => -1
 ```
 
-**lsh** `(lsh A count)` if *count* is positive, return *A* shifted left *count* bits, else returns *A* shifted right |*count*| bits, adding zero bits on the left.
+**lsh** `(lsh A count)` if _count_ is positive, return _A_ shifted left _count_ bits, else returns _A_ shifted right |_count_| bits, adding zero bits on the left.
 
 Logical shift treats the value to be shifted as an unsigned integer, and does not sign extend on right shift.
 
@@ -520,8 +520,9 @@ Example:
 ```
 
 ## Streaming Operators
+
 **sha256**
-  `(sha256 A ...)` returns the sha256 hash (as a 32-byte blob) of the bytes of its parameters.
+`(sha256 A ...)` returns the sha256 hash (as a 32-byte blob) of the bytes of its parameters.
 
 ```chialisp
 (sha256 "clvm")
@@ -540,16 +541,17 @@ Example:
 ```
 
 **point_add**
-  `(point_add a0 a1 ...)` takes an arbitrary number of [BLS12-381](https://electriccoin.co/blog/new-snark-curve/) G1 points and adds them.
+`(point_add a0 a1 ...)` takes an arbitrary number of [BLS12-381](https://electriccoin.co/blog/new-snark-curve/) G1 points and adds them.
 
 Example:
+
 ```chialisp
 (point_add (pubkey_for_exp 1) (pubkey_for_exp 2))
    => 0x89ece308f9d1f0131765212deca99697b112d61f9be9a5f1f3780a51335b3ff981747a0b2ca2179b96d2c0c9024e5224
 ```
 
 **pubkey_for_exp**
-  `(pubkey_for_exp A)` turns the integer A into a BLS12-381 point on G1.
+`(pubkey_for_exp A)` turns the integer A into a BLS12-381 point on G1.
 
 ```chialisp
 (pubkey_for_exp 1)
@@ -582,14 +584,14 @@ Some operators have a special value that is returned when they are called with z
 
 `(+)` => `0`
 
-Operator | Identity
----|---
-`+`| 0
-`-`| 0
-`*`| 1
-logand| all 1's
-logior| all zeros
-logxor| all zeros
+| Operator | Identity  |
+| -------- | --------- |
+| `+`      | 0         |
+| `-`      | 0         |
+| `*`      | 1         |
+| logand   | all 1's   |
+| logior   | all zeros |
+| logxor   | all zeros |
 
 Note that `/`, `divmod`, and `lognot` do not have an identity value. Calling them with zero arguments is an error.
 
@@ -611,68 +613,69 @@ To determine the total cost of a clvm program, you can run `brun -c <clvm>`.
 
 This section begins with a breakdown of the specific cost for each operator and how to calculate costs by hand.
 
-* [Cost tables](#cost-tables)
-* [Evaluating cost for a sample brun program](#evaluating-cost-for-a-sample-brun-program)
+- [Cost tables](#cost-tables)
+- [Evaluating cost for a sample brun program](#evaluating-cost-for-a-sample-brun-program)
 
-Later, we'll discuss our rationale for having costs in the first place. We'll also detail the theoretical and realistic maximum cost and size per block. 
+Later, we'll discuss our rationale for having costs in the first place. We'll also detail the theoretical and realistic maximum cost and size per block.
 
-* [Minimum spec machine for farming](#minimum-spec-machine-for-farming)
-* [Maximum cost per block](#maximum-cost-per-block)
+- [Minimum spec machine for farming](#minimum-spec-machine-for-farming)
+- [Maximum cost per block](#maximum-cost-per-block)
 
 ## Cost tables
 
 The costs used in Chia's consensus come from the Rust implementation of CLVM, specifically from these locations:
-  * [more_ops.rs#L24](https://github.com/Chia-Network/clvm_rs/blob/main/src/more_ops.rs#L24)
-  * [core_ops.rs#L7](https://github.com/Chia-Network/clvm_rs/blob/main/src/core_ops.rs#L7)
-  * [run_program.rs#L11](https://github.com/Chia-Network/clvm_rs/blob/main/src/run_program.rs#L11)
+
+- [more_ops.rs#L24](https://github.com/Chia-Network/clvm_rs/blob/main/src/more_ops.rs#L24)
+- [core_ops.rs#L7](https://github.com/Chia-Network/clvm_rs/blob/main/src/core_ops.rs#L7)
+- [run_program.rs#L11](https://github.com/Chia-Network/clvm_rs/blob/main/src/run_program.rs#L11)
 
 We'll start with a table showing the two base costs, namely a mandatory cost and a cost per byte of memory.
 
-| type                   | base cost   | cost per byte |
-| ---------------------- | ----------- | ------------- |
-| mandatory cost         | 1           | -             |
-| `MALLOC_COST_PER_BYTE` | -           | 10            |
+| type                   | base cost | cost per byte |
+| ---------------------- | --------- | ------------- |
+| mandatory cost         | 1         | -             |
+| `MALLOC_COST_PER_BYTE` | -         | 10            |
 
-* The "mandatory cost" is charged for all operators to process data
-* `MALLOC_COST_PER_BYTE` is charged for allocating new atoms, as the return value(s) from operators. Atoms 0 and 1 don't count, they are free. E.g. `(> A B)`, which returns `true` or `false`, is not charged the `MALLOC_COST_PER_BYTE`.
+- The "mandatory cost" is charged for all operators to process data
+- `MALLOC_COST_PER_BYTE` is charged for allocating new atoms, as the return value(s) from operators. Atoms 0 and 1 don't count, they are free. E.g. `(> A B)`, which returns `true` or `false`, is not charged the `MALLOC_COST_PER_BYTE`.
 
 Next we'll show the cost of each CLVM operator, as well as the cost of the outputted conditions.
 
-| operator            | base cost | cost per arg | cost per byte |
-| ------------------- | --------- | ------------ | ------------- |
-| `f` *first*         | 30        | -            | -             |
-| `i` *if*            | 33        | -            | -             |
-| `c` *cons*          | 50        | -            | -             |
-| `r` *rest*          | 30        | -            | -             |
-| `l` *listp*         | 19        | -            | -             |
-| `q` *quote*         | 20        | -            | -             |
-| `a` *apply*         | 90        | -            | -             |
-| `=`                 | 117       | -            | 1             |
-| `+`                 | 99        | 320          | 3             |
-| `/`                 | 988       | -            | 4             |
-| `*`                 | 92        | 885          | [see here](https://github.com/Chia-Network/clvm_tools/blob/main/costs/README.md#multiplication) |
-| `logand`, `logior`, `logxor` | 100 | 264       | 3             |
-| `lognot`            | 331       | -            | 3             |
-| `>`                 | 498       | -            | 2             |
-| `>s`                | 117       | -            | 1             |
-| `strlen`            | 173       | -            | 1             |
-| `concat`            | 142       | 135          | 3             |
-| `divmod`            | 1116      | -            | 6             |
-| `sha256`            | 87        | 134          | 2             |
-| `ash`               | 596       | -            | 3             |
-| `lsh`               | 277       | -            | 3             |
-| `not`, `any`, `all` | 200       | 300          | -             |
-| `point_add`         | 101094    | 1343980      | -             |
-| `pubkey_for_exp`    | 1325730   | -            | 38            |
-|                     |           |              |               |
+| operator                     | base cost | cost per arg | cost per byte                                                                                   |
+| ---------------------------- | --------- | ------------ | ----------------------------------------------------------------------------------------------- |
+| `f` _first_                  | 30        | -            | -                                                                                               |
+| `i` _if_                     | 33        | -            | -                                                                                               |
+| `c` _cons_                   | 50        | -            | -                                                                                               |
+| `r` _rest_                   | 30        | -            | -                                                                                               |
+| `l` _listp_                  | 19        | -            | -                                                                                               |
+| `q` _quote_                  | 20        | -            | -                                                                                               |
+| `a` _apply_                  | 90        | -            | -                                                                                               |
+| `=`                          | 117       | -            | 1                                                                                               |
+| `+`                          | 99        | 320          | 3                                                                                               |
+| `/`                          | 988       | -            | 4                                                                                               |
+| `*`                          | 92        | 885          | [see here](https://github.com/Chia-Network/clvm_tools/blob/main/costs/README.md#multiplication) |
+| `logand`, `logior`, `logxor` | 100       | 264          | 3                                                                                               |
+| `lognot`                     | 331       | -            | 3                                                                                               |
+| `>`                          | 498       | -            | 2                                                                                               |
+| `>s`                         | 117       | -            | 1                                                                                               |
+| `strlen`                     | 173       | -            | 1                                                                                               |
+| `concat`                     | 142       | 135          | 3                                                                                               |
+| `divmod`                     | 1116      | -            | 6                                                                                               |
+| `sha256`                     | 87        | 134          | 2                                                                                               |
+| `ash`                        | 596       | -            | 3                                                                                               |
+| `lsh`                        | 277       | -            | 3                                                                                               |
+| `not`, `any`, `all`          | 200       | 300          | -                                                                                               |
+| `point_add`                  | 101094    | 1343980      | -                                                                                               |
+| `pubkey_for_exp`             | 1325730   | -            | 38                                                                                              |
+|                              |           |              |                                                                                                 |
 
 Finally, three of CLVM's conditions also have an associated cost:
 
-| operator            | cost    |
-| ------------------- | ------- |
-| `CREATE_COIN`       | 1800000 |
-| `AGG_SIG_UNSAFE`    | 1200000 |
-| `AGG_SIG_ME`        | 1200000 |
+| operator         | cost    |
+| ---------------- | ------- |
+| `CREATE_COIN`    | 1800000 |
+| `AGG_SIG_UNSAFE` | 1200000 |
+| `AGG_SIG_ME`     | 1200000 |
 
 Aside from cost, the maximum number of atoms or pairs (counted separately) in a CLVM program is 2^31 apiece. If this threshold is exceeded, the program will fail. However, this is likely a moot point because it's probably not possible to write a program with this many atoms or pairs without exceeding the maximum cost per block.
 
@@ -690,19 +693,20 @@ At the lowest level of the interpreter, we interpret an atom as one of three thi
 
 1. A quote (cost 20)
 2. A path lookup into the environment (base cost of 44 + 4 for each bit)
-  > Note that there might be a penalty cost. See the [Penalty cost](#penalty-cost) section for more info
+   > Note that there might be a penalty cost. See the [Penalty cost](#penalty-cost) section for more info
 3. An operator (mandatory cost of 1 + the cost of executing the operator)
 
 Next we can calculate the cost of the program, "(concat (q . `gu`) (q . `ide`))":
-* `concat` eval (mandatory cost):   1
-* `q . gu` (cost of a quote):      20 
-* `q . ide` (cost of a quote):     20 
-* `concat` (execution cost):      142
-* `concat` arg cost ("gu"):       135 
-* `concat` arg cost ("ide"):      135
-* `concat` two bytes ("gu"):        6 (2 bytes * 3 cost per byte)
-* `concat` three bytes ("ide"):     9 (3 bytes * 3 cost per byte)
-* `malloc` five bytes ("guide"):   50 (5 bytes * 10 malloc cost per byte)
+
+- `concat` eval (mandatory cost): 1
+- `q . gu` (cost of a quote): 20
+- `q . ide` (cost of a quote): 20
+- `concat` (execution cost): 142
+- `concat` arg cost ("gu"): 135
+- `concat` arg cost ("ide"): 135
+- `concat` two bytes ("gu"): 6 (2 bytes \* 3 cost per byte)
+- `concat` three bytes ("ide"): 9 (3 bytes \* 3 cost per byte)
+- `malloc` five bytes ("guide"): 50 (5 bytes \* 10 malloc cost per byte)
 
 Program cost = 518
 
@@ -718,7 +722,7 @@ cost = 518
 At first glance, it might appear that the following two programs should have the same cost. However, the cost of the second program is 10 higher than that of the first:
 
 ```
-$ brun -c '(+ (q . 126) (q . 1))' 
+$ brun -c '(+ (q . 126) (q . 1))'
 cost = 796
 127
 ```
@@ -736,6 +740,7 @@ $ brun -d -c '(+ (q . 126) (q . 1))'
 cost = 796
 7f
 ```
+
 ```
 $ brun -d -c '(+ (q . 127) (q . 1))'
 cost = 806
@@ -758,21 +763,22 @@ The first question we must answer is how much time elapses between transaction b
 
 `28.125 seconds`
 
-  > Note: The **average** time between transaction blocks is [51.95 seconds](https://docs.chia.net/docs/03consensus/foliage#transaction-block-time). The lower a given time interval between transaction blocks (down to 28.125 seconds), the lower the probability of a transaction block being created in that time interval.
+> Note: The **average** time between transaction blocks is [51.95 seconds](https://docs.chia.net/docs/03consensus/foliage#transaction-block-time). The lower a given time interval between transaction blocks (down to 28.125 seconds), the lower the probability of a transaction block being created in that time interval.
 
 A transaction block is considered "full" when it contains 2000 outputs. For this document, we'll assume this translates to 1000 vanilla transactions, each with two inputs and two outputs. This would give the network an average of 19.25 (1000/51.95) transactions per second.
 
-  > Note: A transaction with only one input and one output is also possible. In theory, a block could therefore hold up to 2000 transactions, in which case the network would process an average of 38.5 (2000/51.95) transactions per second.
+> Note: A transaction with only one input and one output is also possible. In theory, a block could therefore hold up to 2000 transactions, in which case the network would process an average of 38.5 (2000/51.95) transactions per second.
 
 With this goal in mind, Chia has created a **generator program** that processes 2000 compressed inputs and outputs. This program simulates a "full block".
 
 To calculate the total amount of time for a Raspberry Pi 4 to process a full block, we must take into account three factors:
-* The time required to run the generator program (2000 inputs and outputs)
-  * The Raspberry Pi 4 accomplishes this in 5.2 seconds
-* The time required to validate 2000 public keys
-  * 2.2 seconds
-* The time required to validate 2000 aggregate signatures
-  * 10.63 seconds
+
+- The time required to run the generator program (2000 inputs and outputs)
+  - The Raspberry Pi 4 accomplishes this in 5.2 seconds
+- The time required to validate 2000 public keys
+  - 2.2 seconds
+- The time required to validate 2000 aggregate signatures
+  - 10.63 seconds
 
 Therefore, the total amount of time required for a Raspberry Pi 4 to process a full block is 5.2 + 2.2 + 10.63 = 18.03 seconds. This is 10.095 seconds faster than the minimum time between blocks, and 33.92 seconds faster than the average. When considering other factors such as network latency and time required to fetch a full proof ([640 ms on a slow HDD](https://docs.chia.net/docs/03consensus/proof-of-space#farming)), this still allows plenty of leeway for a Raspberry Pi 4 to stay synced and collect farming rewards.
 
@@ -782,12 +788,13 @@ As a benchmark, we use the Raspberry Pi 4, Chia's minimum spec machine for farmi
 
 ## Maximum cost per block
 
-Now that we've established that a Raspberry Pi 4 can, indeed, sync and farm, even when every transaction block is full, we'll calculate the maximum cost per block. 
+Now that we've established that a Raspberry Pi 4 can, indeed, sync and farm, even when every transaction block is full, we'll calculate the maximum cost per block.
 
 There are three categories that go into determining a block's maximum cost:
+
 1. Generator program cost, which is split into two parts
-    * Execution cost
-    * Signature validation cost
+   - Execution cost
+   - Signature validation cost
 2. Generator program size (each byte has a cost)
 3. Generator program coins (each new coin has a cost)
 
@@ -799,9 +806,9 @@ In the case of calculating the maximum cost, these three categories are to be gi
 
 An Intel Macbook Pro was used as a reference platform to determine baseline costs based on CPU usage. The costs were then hand-tweaked for various reasons:
 
-* To ascribe additional cost to operations that allocate memory, i.e. the operand per-byte cost was inflated. This additional cost is called `MALLOC_PER_BYTE_COST` and amounts to 10 cost per byte.
-* The especially CPU intensive BLS operations (`point_add` and `pubkey_for_exp`) had their cost inflated to not differ too much from the Raspberry Pi 4.
-* Some operations that do not allocate memory and end up being common in relatively simple programs had their cost deflated. Specifically, `if`, `cons`, `listp`, `first`, and `rest`.
+- To ascribe additional cost to operations that allocate memory, i.e. the operand per-byte cost was inflated. This additional cost is called `MALLOC_PER_BYTE_COST` and amounts to 10 cost per byte.
+- The especially CPU intensive BLS operations (`point_add` and `pubkey_for_exp`) had their cost inflated to not differ too much from the Raspberry Pi 4.
+- Some operations that do not allocate memory and end up being common in relatively simple programs had their cost deflated. Specifically, `if`, `cons`, `listp`, `first`, and `rest`.
 
 The result is that the generator program has an execution cost of 1,317,054,957.
 
@@ -811,15 +818,17 @@ The result is that the generator program has an execution cost of 1,317,054,957.
 
 The signature validation cost is based on computation time. BLS operations involve public key and aggregate signature validation, which are multiplied by the number of outputs.
 
-* Time per public key validation: 0.179370 ms
-* Time per aggregate signature validation: 0.972140 ms
-* Total time for 2000 key and signature validations: (0.179370 + 0.972140) * 2000 = 2303.02 ms
+- Time per public key validation: 0.179370 ms
+- Time per aggregate signature validation: 0.972140 ms
+- Total time for 2000 key and signature validations: (0.179370 + 0.972140) \* 2000 = 2303.02 ms
 
 Each 1 cost is designed to require 1 nanosecond, so we need to multiply the result by 1 million (ns/ms).
-* Cost for the generator program's BLS operations: `2303.02 * 1,000,000 = 2,303,020,000`.
+
+- Cost for the generator program's BLS operations: `2303.02 * 1,000,000 = 2,303,020,000`.
 
 Using this info, we can also calculate the cost of each `AGG_SIG_UNSAFE` and `AGG_SIG_ME` condition in all CLVM programs:
-* Cost per BLS condition: `(0.179370 + 0.972140) * 1,000,000 = 1,151,510`. We round this number up to 1,200,000.
+
+- Cost per BLS condition: `(0.179370 + 0.972140) * 1,000,000 = 1,151,510`. We round this number up to 1,200,000.
 
 ### Generator program cost
 
@@ -852,4 +861,3 @@ Theoretical maximum cost per block: `3,620,074,957 + 3,620,074,957 + 3,620,074,9
 The theoretical maximum size of a single block is `maximum cost per block / cost per byte`, or `11,000,000,000 / 12,000 = 916,667 bytes`. However, this number ignores the costs of all operators. If you want a CLVM program to do anything useful, the maximum size would be closer to 400 KB.
 
 Even this number is not realistic because it assumes that a single program will take up an entire block. The maximum number of vanilla transactions (with two outputs) per block is 1000. Therefore, if there is fee pressure on Chia's blockchain, a 400 KB program would need to include a larger fee than the top 1000 vanilla transactions in the mempool -- combined -- in order for a farmer to include it.
-
